@@ -1,4 +1,4 @@
-# chariot-connect-
+# chariot-connecté
 
 Dans ce projet tout les contributeurs doivent cloner le projet et créer leur propre branche:
 
