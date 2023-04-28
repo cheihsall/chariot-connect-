@@ -2,27 +2,29 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Ascan from './Ascan';
+import Home from './Home';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>{
+    <NavigationContainer>
    
      <Stack.Navigator>
-        <Stack.Screen name="Home
-" component={ <View style={styles.container}>
-      <Text>chariot</Text>
-      <Button title="commencer" style={styles.bouttonAccueil} />
-      <StatusBar style="auto" />
-      <Button onPress={() => navigation.navigate('Ascan')}
-                title="Login"
-               />
-              
+        <Stack.Screen name="Chariot 5" options={{headerStyle: {
+            backgroundColor: '#4c7fc7',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          statusBarAnimation: 'slide',
+          statusBarStyle: 'dark',}} component={Home} />
+        <Stack.Screen name="Produit" component={Ascan} />
 
-    </View>} />
       </Stack.Navigator>
-    }</NavigationContainer>
+    </NavigationContainer>
     
   );
 }
