@@ -2,8 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Ascan from './Ascan';
-import Home from './Home';
+import Ascan from './screens/Ascan';
+import Home from './screens/Home';
+import Achats from './screens/Achats';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +23,7 @@ export default function App() {
           statusBarAnimation: 'slide',
           statusBarStyle: 'dark',}} component={Home} />
         <Stack.Screen name="Produit" component={Ascan} />
-
+        <Stack.Screen name="Achats" component={Achats} />
       </Stack.Navigator>
     </NavigationContainer>
     
