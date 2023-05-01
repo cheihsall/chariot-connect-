@@ -75,7 +75,7 @@ const blurhash =
         }}>
             <Image
                 style={styles.image}
-                source={require('./assets/chariot3x.png')}
+                source={require('../assets/chariot3x.png')}
                 placeholder={blurhash}
                 contentFit="cover"
                 transition={1000}
