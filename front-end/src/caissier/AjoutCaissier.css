@@ -1,0 +1,147 @@
+
+
+
+.iconne:hover{
+    box-shadow: 7px 6px 10px #4C7FC7;
+  }
+  .formulaire{
+    width: 100%;
+  }
+  .iconne2{
+    width: 494px;
+    height: 296px;
+   
+   
+    border-radius: 5px;
+    font-size: 20px;
+    margin-top: 10px;
+    }
+    .textarea{
+     
+      width: 63.5%;
+      margin-left: 18%;
+      
+    }
+    
+  .form1{
+   
+   display: flex;
+   justify-content: center;
+    }
+   
+  .lab{
+    color: aliceblue;
+    font-size: large;
+    font-weight: bold;
+    
+  }
+  
+   
+  
+      .boutton{
+        font-size: 20px;
+        border:none;
+        width: 230px;
+        height: 40px;
+        color: aliceblue;
+        background-color: #FEBC11;
+        border-radius: 7px;
+        box-shadow: 7px 6px 10px rgba(0, 0, 0, 0.25);
+        
+      }
+  .titre{
+   
+    font-weight: bold;
+    font-size: 40px;
+    color: #4C7FC7;
+  }
+  
+    .logo{
+        width: 543px;
+        height: 110px;
+        position: absolute;
+       
+        display: flex;
+        justify-content: center;
+        
+      }
+      .contour{
+        background-color: aliceblue;
+        width: 150px;
+        height: 149px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+       border: 6px solid #FEBC11 ;
+       border-radius: 150px;
+  
+      }
+  
+    .formm{
+      width: 843px;
+      height: 580px;
+      background-color:#4C7FC7;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     border-radius: 5px;
+     box-shadow: 7px 6px 10px  #FEBC11 ;
+     margin-top: 12px;
+      }
+  
+      .carte{
+        background-color: #4C7FC7;
+        width: 290px;
+        height: 140px;
+        box-shadow: 6px 6px 5px rgba(254, 188, 17, 0.51);
+    border-radius: 5px;
+    color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    }
+    .cart2{
+        margin-left: 25%;
+        margin-right: 25%;
+    }
+    
+    .cartemere{
+        margin-bottom: 2%;
+       padding-left: 8;
+        width:1350px;
+        height: 140px;
+       display: flex;
+       flex-direction: row;
+       justify-content: center;
+        border-radius: 5px;
+        background-color:none;
+        border: none;
+        padding: 5px;
+      
+        
+    }
+    
+ 
+          
+      .role{
+        width: 275px;
+      }
+      
+      
+      .cacher{
+        display: none;
+       
+      }
+      
+      
+      
+      
+      
+  
+  
+  
+  
+  
+  
+  

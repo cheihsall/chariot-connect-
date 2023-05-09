@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Ascan from './Ascan';
 import Home from './Home';
+import CommandeScreen from './Commande';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,7 +23,7 @@ export default function App() {
           statusBarAnimation: 'slide',
           statusBarStyle: 'dark',}} component={Home} />
         <Stack.Screen name="Produit" component={Ascan} />
-
+        <Stack.Screen name="Commande" component={CommandeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     

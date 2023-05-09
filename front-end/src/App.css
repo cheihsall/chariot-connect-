@@ -1,42 +1,102 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.iconne{
+width: 494px;
+height: 296px;
+background-color: 
+#FEBC11;
+box-shadow: 7px 6px 10px rgba(0, 0, 0, 0.25);
+border-radius: 5px;
+display: flex;
+justify-content: center;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.iconne:hover{
+  box-shadow: 7px 6px 10px #4C7FC7;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.formulaire{
+  width: 400px;
 }
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.iconne2{
+  width: 494px;
+  height: 296px;
+ 
+ 
+  border-radius: 5px;
+  font-size: 20px;
+  margin-top: 10px;
   }
-  to {
-    transform: rotate(360deg);
+
+.form1{
+  width: 643px;
+  height: 684px;
+  border-radius: 5px;
   }
+.lab{
+  color: aliceblue;
+  font-size: large;
+  font-weight: bold;
+  
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+  .form2{
+    width: 643px;
+    height: 590px;
+    }
+
+    .boutton{
+      font-size: 20px;
+      border:none;
+      width: 230px;
+      height: 40px;
+      color: aliceblue;
+      background-color: #FEBC11;
+      border-radius: 7px;
+      box-shadow: 7px 6px 10px rgba(0, 0, 0, 0.25);
+      
+    }
+.titre{
+  margin-top: 30px;
+  margin-bottom: 130px;
+  font-weight: bold;
+  font-size: 40px;
+  color: #4C7FC7;
 }
 
-.card {
-  padding: 2em;
-}
+  .logo{
+      width: 643px;
+      height: 170px;
+      position: absolute;
+      margin-top: -72px;
+      display: flex;
+      justify-content: center;
+      
+    }
+    .contour{
+      background-color: aliceblue;
+      width: 200px;
+      height: 199px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+     border: 6px solid #FEBC11 ;
+     border-radius: 150px;
 
-.read-the-docs {
-  color: #888;
-}
+    }
+
+  .formm{
+    width: 643px;
+    height: 590px;
+    background-color:#4C7FC7;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 5px;
+   box-shadow: 7px 6px 10px  #FEBC11 ;
+    }
+
+    
+
+
+
+
+
+

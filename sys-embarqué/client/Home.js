@@ -46,7 +46,7 @@ const blurhash =
       onPress: () => console.log('Cancel Pressed'),
       style: 'cancel',
     },
-    {text: 'OUI', onPress:() => navigation.navigate('Produit')},
+    {text: 'OUI', onPress:() => navigation.navigate('Commande')},
   ]);
   return (
     <View style={styles.container}>

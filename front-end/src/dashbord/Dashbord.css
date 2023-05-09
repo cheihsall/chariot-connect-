@@ -1,0 +1,69 @@
+
+.sidebaar{
+    width: 15%;
+    height: 819px;
+    background-color: 
+    #4C7FC7;
+    box-shadow: 7px 6px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+ display: block;
+  align-items: center;
+  justify-content: center;
+    padding-top: 5%;
+    }
+    
+    .form2{
+        width: 643px;
+        height: 590px;
+        }
+
+        .menu{
+            background-color: none;
+         width: 70%;
+         height: 5%;
+         color: aliceblue;
+margin: 15%;
+        }
+  
+      .navbaar{
+      
+        height: 101px;
+        border-radius: 5px;
+        background-color:#FEBC11;
+        }
+
+        .popup{
+          background-color: #4C7FC7;
+        }
+    
+        .bttn{
+         
+          color: aliceblue;
+width: 80%;
+height: 5%;
+display: flex;
+justify-content: center;
+justify-items: center;
+align-items: center;
+margin-left: 10%;
+border-radius: 2%;
+font-size: larger;
+margin-bottom: 10%;
+text-decoration: none;
+        }
+ 
+   
+   .bttn:hover {
+    background-color: #FEBC11;
+   }   
+      
+   .bttn:active {
+    background-color: #FEBC11;
+   }
+    
+    
+    
+    
+    
+    
+    
