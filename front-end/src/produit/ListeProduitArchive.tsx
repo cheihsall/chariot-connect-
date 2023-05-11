@@ -83,7 +83,7 @@ function ListeProduit() {
     fetch("http://localhost:3000/produit/")
       .then((res) => res.json())
       .then((res) => {
-        setUsers(res.filter((data: any) => data.etat == true));
+        setUsers(res.filter((data: any) => data.etat == false));
       });
   });
   [];
@@ -202,8 +202,8 @@ function ListeProduit() {
                           onClick={() =>
                             Swal.fire({
                               title: "Vous etes sur?",
-                              text: "de vouloir archiver ce produit!",
-                              icon: "warning",
+                              text: "de vouloir desarchiver ce produit!",
+                              icon: "success",
                               showCancelButton: "Non",
                               confirmButtonColor: "#4C7FC7",
                               cancelButtonText: "Non",
@@ -211,7 +211,7 @@ function ListeProduit() {
                               confirmButtonText: "Oui, archive le!",
                             }).then((result) => {
                               if (result.isConfirmed) {
-                                handleArchive(false, produit.id);
+                                handleArchive(true, produit.id);
                               }
                             })
                           }

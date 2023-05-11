@@ -17,9 +17,9 @@ export class ProduitService {
 
     //Si l'utilisateur existe déjà, on renvoie une erreur
     if (userExist) {
-      console.log(userExist)
+      console.log(userExist);
       throw new HttpException('User already exist', HttpStatus.NOT_ACCEPTABLE);
-  }
+    }
     return this.produitRepository.save(produit);
   }
 

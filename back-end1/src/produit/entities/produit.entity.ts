@@ -10,16 +10,13 @@ export class Produit {
   @Column()
   quantite: string;
 
-
-
   @Column()
   description: string;
 
   @Column()
   prix: number;
 
-
-
+  
   @Column()
   reference: string;
 

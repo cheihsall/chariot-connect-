@@ -14,6 +14,7 @@ import { User } from './user/entities/user.entity';
 import { DetailCommande } from './detail_commande/entities/detail_commande.entity';
 import { Chariot } from './chariot/entities/chariot.entity';
 import { SharedModule } from './shared/shared.module';
+import { ConnexionModule } from './connexion/connexion.module';
 
 @Module({
   imports: [
@@ -32,7 +33,7 @@ import { SharedModule } from './shared/shared.module';
     ChariotModule,
     DetailCommandeModule,
     UserModule,
-   
+    ConnexionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

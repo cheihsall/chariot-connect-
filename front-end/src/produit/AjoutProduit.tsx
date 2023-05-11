@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import "./AjoutProduit.css";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { useForm } from "react-hook-form";
-import axios  from 'axios'
+import axios from "axios";
 function AjoutProduit() {
   //const {register, handleSubmit, formState:{errors}}= useForm({mode:"onChange"})
   const {
@@ -15,36 +15,32 @@ function AjoutProduit() {
   const formRef = useRef(null);
 
   const onSubmit = (data: any) => {
-
-    const lecteur = new FileReader()
+    const lecteur = new FileReader();
 
     lecteur.readAsDataURL(data.photo[0]);
 
     lecteur.onload = async () => {
-        //Récupération de l'image encodé en base64
-       const base64Image = lecteur.result?.split(',')[1]
-       //console.log(lecteur.result);
-       //console.log(base64Image);
+      //Récupération de l'image encodé en base64
+      const base64Image = lecteur.result?.split(",")[1];
+      //console.log(lecteur.result);
+      //console.log(base64Image);
 
-    console.log(data);
-     //envoi du formulaire au serveur
-     const reponse = await axios.post('http://localhost:3000/produit', {
-      libelle: data.libelle,
-      cathegorie: data.cathegorie,
-      type: data.type,
-      quantite: data.quantite,
-      prix: data.prix,
-      reference: data.reference,
-      description: data.description,
-     // photo: data.photo,
-      photo: base64Image
-      
-    
- })
- console.log(reponse)
-        reset();// réinitialiser le formulaire après l'envoi réussi
-      
-    }
+      console.log(data);
+      //envoi du formulaire au serveur
+      const reponse = await axios.post("http://localhost:3000/produit", {
+        libelle: data.libelle,
+        cathegorie: data.cathegorie,
+        type: data.type,
+        quantite: data.quantite,
+        prix: data.prix,
+        reference: data.reference,
+        description: data.description,
+        // photo: data.photo,
+        photo: base64Image,
+      });
+      console.log(reponse);
+      reset(); // réinitialiser le formulaire après l'envoi réussi
+    };
   };
   return (
     <>
@@ -59,10 +55,10 @@ function AjoutProduit() {
                 ref={formRef}
                 className="formulaire gap-3 d-flex flex-column justify-content-center"
               >
-   <div className="d-flex gap-2 justify-content-center">
-<div className="d-flex flex-column ">
+                <div className="d-flex gap-2 justify-content-center">
+                  <div className="d-flex flex-column ">
                     <label className="lab" htmlFor="">
-                     Reference{" "}
+                      Reference{" "}
                     </label>
                     <input
                       className="form-control border-none"
@@ -84,7 +80,6 @@ function AjoutProduit() {
                     </div>
                   </div>
 
-             
                   <div className="d-flex flex-column ">
                     <label className="lab" htmlFor="">
                       Libelé{" "}
@@ -95,7 +90,7 @@ function AjoutProduit() {
                       {...register("libelle", {
                         required: {
                           value: true,
-                          message: "ce champ est requis", 
+                          message: "ce champ est requis",
                         },
                       })}
                       type="text"
@@ -108,7 +103,6 @@ function AjoutProduit() {
                       )}
                     </div>
                   </div>
-                
                 </div>
 
                 <div className="d-flex gap-2 justify-content-center">
@@ -190,17 +184,21 @@ function AjoutProduit() {
                     <label className="lab" htmlFor="">
                       Cathégorie{" "}
                     </label>
-                    <input
-                      className="form-control border-none"
-                      placeholder="Electronique"
+                    <select
+                      className="form-control role border-none"
                       {...register("cathegorie", {
                         required: {
                           value: true,
                           message: "ce champ est requis",
                         },
                       })}
-                      type="text"
-                    />
+                    >
+                      <option value="">Choisir un cathegorie</option>
+                      <option value="Administrateur">Alimentaire</option>
+                      <option value="Caissier">Electronique</option>
+                      <option value="Administrateur">Vestimentaire</option>
+                      <option value="Caissier">Electromenager</option>
+                    </select>
                     <div>
                       {errors.cathegorie?.type === "required" && (
                         <span className="text-danger">
@@ -209,10 +207,9 @@ function AjoutProduit() {
                       )}
                     </div>
                   </div>
-                
-                </div>  
+                </div>
                 <div className="d-flex gap-1 justify-content-center">
-                <div className="d-flex  flex-column">
+                  <div className="d-flex  flex-column">
                     <label className="lab" htmlFor="">
                       Photo{" "}
                     </label>
@@ -227,8 +224,15 @@ function AjoutProduit() {
                       })}
                       type="file"
                     />
+                    <div>
+                      {errors.photo?.type === "required" && (
+                        <span className="text-danger">
+                          {errors.photo.message as unknown as string}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  </div>
+                </div>
                 <div className="textarea ">
                   <div className="w-100">
                     <label className="lab" htmlFor="">

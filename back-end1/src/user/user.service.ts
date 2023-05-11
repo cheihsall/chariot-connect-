@@ -25,11 +25,17 @@ export class UserService {
   }
 }
 */
-import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { HashService } from 'src/shared/hash.service';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -46,8 +52,9 @@ export class UserService {
 
     //Si l'utilisateur existe déjà, on renvoie une erreur
     if (userExist)
-
-    throw new UnauthorizedException({ message: "cet utilisateur existe deja" });
+      throw new UnauthorizedException({
+        message: 'cet utilisateur existe deja',
+      });
     /*  throw new HttpException(
         { message: 'cet utilisateur existe deja' },
         HttpStatus.NOT_ACCEPTABLE,
@@ -70,6 +77,11 @@ export class UserService {
   findOneByEmail(email: string): Promise<User | null> {
     return this.usersRepository.findOneBy({ email });
   }
+
+  update(id: number, updateUsersDto: UpdateUserDto) {
+    return this.usersRepository.update(id, updateUsersDto);
+  }
+
 
   async remove(id: number): Promise<void> {
     await this.usersRepository.delete(id);

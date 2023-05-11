@@ -11,10 +11,10 @@ justify-content: center;
 align-items: center;
 
 }
-.cart2{
+/*.cart2{
     margin-left: 25%;
     margin-right: 25%;
-}
+}*/
 .inputt{
     width: 16%;
     height: 60%;
@@ -53,6 +53,7 @@ align-items: center;
     flex-direction: row;
     gap: 8%;
     width: 100%;
+    bottom: 0px;
     height: 60px;
     background-color: #4C7FC7;
     color: aliceblue;
@@ -126,10 +127,25 @@ align-items: center;
   }
   
  
-      
+  .fixed-table {
+    width: 100%; /* définissez la largeur de la table à 100% */
+    height: 400px; /* définissez la hauteur de la table à la valeur de votre choix */
+    overflow-y: scroll; /* activez la barre de défilement verticale si nécessaire */
+  }
   
   
   
+  
+  .table-container {
+    position: relative;
+  }
+  
+  .loader-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
   
   
   

@@ -1,8 +1,4 @@
-import { useState } from "react";
-import reactLogo from "../assets/chariot3x.png";
-import iconeConnect from "../Ellipse 1.png";
-import iconeUser from "../assets/icons8-user 1.png";
-import viteLogo from "/vite.svg";
+import { useRef, useState } from "react";
 import "./AjoutCaissier.css";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { useForm } from "react-hook-form";
@@ -12,9 +8,13 @@ function AjoutCaissier() {
   const [EMessage, setEMessage] = useState<boolean>(false);
   const {
     register,
+    watch,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: "onChange" });
+  const password = useRef({});
+  password.current = watch("password", "");
 
   const onSubmit = (data: any) => {
     fetch("http://localhost:3000/users", {
@@ -30,19 +30,18 @@ function AjoutCaissier() {
         "Content-Type": "application/json",
       },
     })
-    .then(response => {
-      if (response.status === 201) {
-          return response.json()
-      } else { 
-     
+      .then((response) => {
+        if (response.status === 201) {
+          return response.json();
+        } else {
           //sendMessage('message', 'cool');
-          return response.json().then((data:any) => {
-            setErrorMessage(data.message)
-            setEMessage(true) 
-              console.log(data.message)
-          })
-      }
-    })
+          return response.json().then((data: any) => {
+            setErrorMessage(data.message);
+            setEMessage(true);
+            console.log(data.message);
+          });
+        }
+      })
       .then((response) => console.log(response));
   };
   return (
@@ -57,8 +56,15 @@ function AjoutCaissier() {
                 onSubmit={handleSubmit(onSubmit)}
                 action=""
                 className="formulaire gap-5 d-flex flex-column justify-content-center"
-              ><div className={`justify-content-center alert alert-danger ${!EMessage ? "cacher": ""}`}
-              role='alert'>{errorMessage}</div>
+              >
+                <div
+                  className={`justify-content-center alert alert-danger ${
+                    !EMessage ? "cacher" : ""
+                  }`}
+                  role="alert"
+                >
+                  {errorMessage}
+                </div>
                 <div className="d-flex gap-5 justify-content-center">
                   <div className="d-flex flex-column ">
                     <label className="lab" htmlFor="">
@@ -109,9 +115,7 @@ function AjoutCaissier() {
                 </div>
 
                 <div className="d-flex gap-5 justify-content-center">
-                
                   <div className="d-flex flex-column">
-                    
                     <label className="lab" htmlFor="">
                       Email{" "}
                     </label>
@@ -204,19 +208,22 @@ function AjoutCaissier() {
                     <input
                       className="form-control border-none"
                       placeholder="****"
-                      {...register("passwordConf", {
+                      {...register("confirmPassword", {
                         required: {
                           value: true,
-                          message: "ce champ est requis",
+                          message: "Ce champ est obligatoire",
                         },
+                        validate: (value) =>
+                          password.current === value ||
+                          "Mots de passe non correspondant",
                       })}
                       type="password"
                     />
                     <div>
-                      {errors.passwordConf?.type === "required" && (
-                        <span className="text-danger">
-                          {errors.passwordConf.message as unknown as string}
-                        </span>
+                      {errors.confirmPassword && (
+                        <p className="text-danger">
+                          {errors.confirmPassword.message as string}
+                        </p>
                       )}
                     </div>
                   </div>
