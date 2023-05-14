@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 
 @Entity()
 export class Produit {
@@ -23,12 +23,13 @@ export class Produit {
   @Column({ type: 'text' })
   photo: string;
 
-  @Column()
-  type: string;
 
   @Column()
   cathegorie: string;
 
   @Column({ default: true })
   etat: boolean;
+
+  @CreateDateColumn({ type: 'timestamp', precision: 3 })
+  date: Date;
 }

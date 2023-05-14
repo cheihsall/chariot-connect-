@@ -26,6 +26,7 @@ export class UserService {
 }
 */
 import {
+  BadRequestException,
   HttpException,
   HttpStatus,
   Injectable,
@@ -78,7 +79,9 @@ export class UserService {
     return this.usersRepository.findOneBy({ email });
   }
 
-  update(id: number, updateUsersDto: UpdateUserDto) {
+  async update(id: number, updateUsersDto: any) {
+   
+    
     return this.usersRepository.update(id, updateUsersDto);
   }
 

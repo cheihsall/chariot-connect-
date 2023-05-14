@@ -148,7 +148,7 @@ function ListeProduit() {
                         <div>
                           <span>
                             <img
-                              style={{ width: "4em", borderRadius: "2em" }}
+                              style={{ width: "2em", borderRadius: "2em" }}
                               src={`data:image/png;base64,${produit.photo}`}
                               alt=""
                             />
@@ -198,7 +198,7 @@ function ListeProduit() {
 
                         <button
                           type="button"
-                          className="btn btn-danger btn-default btn-rounded mb-4"
+                          className="btn btn-default btn-rounded mb-4"
                           onClick={() =>
                             Swal.fire({
                               title: "Vous etes sur?",

@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
 } from 'typeorm';
 
 import { User } from 'src/user/entities/user.entity';
@@ -25,6 +26,11 @@ export class Commande {
   @Column()
   montant: number;
 
-  @Column({ default: false })
+  @Column({ default: true })
   etat: boolean;
+
+  @CreateDateColumn({ type: 'timestamp', precision: 3 })
+  date: Date;
 }
+
+//{type: 'timestamptz'}

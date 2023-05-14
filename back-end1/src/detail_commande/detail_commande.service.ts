@@ -17,7 +17,9 @@ export class DetailCommandeService {
   }
 
   findAll(): Promise<DetailCommande[]> {
-    return this.dcommandeRepository.find();
+    return this.dcommandeRepository.find({
+      relations: ['produit', 'commande'],
+    });
   }
 
   findOne(id: number) {
