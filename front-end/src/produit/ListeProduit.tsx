@@ -10,6 +10,7 @@ library.add(faEye, faEdit, faTrashAlt);
 
 function ListeProduit() {
   const [users, setUsers] = useState([]);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [libelle, setLibelle] = useState("");
   const [prix, setPrix] = useState("");
@@ -83,7 +84,10 @@ function ListeProduit() {
     fetch("http://localhost:3000/produit/")
       .then((res) => res.json())
       .then((res) => {
+
         setUsers(res.filter((data: any) => data.etat == true));
+        
+
       });
   });
   [];
@@ -121,10 +125,11 @@ function ListeProduit() {
             <table className="table table-striped">
               <thead className="sticky-top">
                 <tr>
-                  <th scope="col">Nbre</th>
+                 
                   <th scope="col">Photo</th>
                   <th scope="col">Libelé</th>
                   <th scope="col">Prix</th>
+                  <th scope="col">Nbre</th>
                   <th scope="col">Type</th>
                   <th scope="col">Cathegorie</th>
                   <th scope="col">Action</th>
@@ -139,16 +144,12 @@ function ListeProduit() {
                   )
                   .map((produit: any) => (
                     <tr key={produit.id}>
-                      <th scope="row">
-                        <div className="flex justify-center items-center gap-2">
-                          <span>{produit.quantite}</span>
-                        </div>
-                      </th>
+                     
                       <td>
                         <div>
                           <span>
                             <img
-                              style={{ width: "4em", borderRadius: "2em" }}
+                              style={{ width: "2em", borderRadius: "2em" }}
                               src={`data:image/png;base64,${produit.photo}`}
                               alt=""
                             />
@@ -166,6 +167,11 @@ function ListeProduit() {
                         </div>
                       </td>
                       <td>
+                        <div className="d-flex justify-content-center justify-items-center align-items-center gap-2">
+                          <span>{produit.quantite}</span>
+                        </div>
+                      </td>
+                      <td>
                         <div className="flex justify-center items-center gap-2">
                           <span>{produit.type}</span>
                         </div>
@@ -179,7 +185,7 @@ function ListeProduit() {
                       <td>
                         <button
                           type="button"
-                          className="btn btn-success btn-default btn-rounded mb-4"
+                          className="btn   btn-default btn-rounded mb-4"
                           data-bs-toggle="modal"
                           data-bs-target="#modalRegisterForm"
                         >
@@ -195,10 +201,10 @@ function ListeProduit() {
                             }}
                           />
                         </button>
-
+<span>    </span>
                         <button
                           type="button"
-                          className="btn btn-danger btn-default btn-rounded mb-4"
+                          className="btn  btn-default btn-rounded mb-4"
                           onClick={() =>
                             Swal.fire({
                               title: "Vous etes sur?",

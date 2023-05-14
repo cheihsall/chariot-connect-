@@ -48,6 +48,7 @@ function Connexionp() {
         localStorage.setItem("nom", data.nom);
         localStorage.setItem("role", data.role);
         navigate("/dashbord");
+        window.location.reload();
       });
   };
   return (

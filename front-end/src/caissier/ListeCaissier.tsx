@@ -11,12 +11,14 @@ function ListeCaissier() {
   const [nom, setNom] = useState("");
   const [email, setEmail] = useState("");
   const [id, setId] = useState("");
+  const [update, setUpdate] = useState(false);
+  const [caissiers, setCaissiers] = useState<any>([]);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({ mode: "onChange" });
+  } = useForm({ mode: "all" });
 
   const [searchTerm, setSearchTerm] = useState("");
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +26,14 @@ function ListeCaissier() {
   };
 
   const formRef = useRef(null);
+useEffect(()=>{
+  const defaultValues : { prenom: string, nom: string, email: string} = { prenom: "", nom:"", email:""}
+  defaultValues.prenom = prenom;
+  defaultValues.nom = nom;
+  defaultValues.email = email;
+  reset({...defaultValues})
 
+},[nom, prenom, email])
   const handleChange1 = (event: any) => {
     const valeurAfterChangePrenom = event.target.value;
     setPrenom(valeurAfterChangePrenom);
@@ -41,14 +50,12 @@ function ListeCaissier() {
   };
 
   const handleModification = (id: any, prenom: any, nom: any, email: any) => {
-    console.log(id);
-    console.log(prenom);
-    console.log(nom);
-    console.log(email);
+   
     setId(id);
     setPrenom(prenom);
     setNom(nom);
     setEmail(email);
+    setUpdate(false);
   };
 
   const onSubmit = async (data: any) => {
@@ -66,7 +73,7 @@ function ListeCaissier() {
       .then((res) => res.json())
       .then((response) => console.log(response));
     reset();
-    window.location.reload();
+    setUpdate(true);
   };
 
   const handleArchive = async (etat: any, id: any) => {
@@ -79,19 +86,31 @@ function ListeCaissier() {
     });
     const data = await response.json();
     console.log(data);
-    window.location.reload();
+    setUpdate(true);
   };
 
-  const [caissiers, setCaissiers] = useState<any>([]);
-  useEffect(() => {
+  const fetchUsers =  () => {
     fetch("http://localhost:3000/users")
       .then((res) => res.json())
-      .then((res) => {
+      .then((res) => { 
         // const use = res.etat = 0
         setCaissiers(res.filter((data: any) => data.etat == true));
       });
-  });
-  [];
+      setUpdate(false)
+  }
+
+  useEffect(() => {
+    if(update) {
+      fetchUsers()
+    }
+  },[update]);
+
+  useEffect(() => {
+    fetchUsers()
+  },[])
+ 
+  
+  
 
   return (
     <>
@@ -126,12 +145,12 @@ function ListeCaissier() {
             <table className="table table-striped  ">
               <thead className="sticky-top">
                 <tr>
-                  <th scope="col">Etat</th>
+                 
                   <th scope="col">Prenom</th>
                   <th scope="col">Nom</th>
                   <th scope="col">Email</th>
 
-                  <th scope="col">Action</th>
+                  <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -143,11 +162,7 @@ function ListeCaissier() {
                   )
                   .map((caissier: any) => (
                     <tr key={caissier.id}>
-                      <th scope="row">
-                        <div className="flex justify-center items-center gap-2">
-                          <span>{caissier.etat}</span>
-                        </div>
-                      </th>
+                     
 
                       <td>
                         <div className="flex justify-center items-center gap-2">
@@ -171,10 +186,11 @@ function ListeCaissier() {
                             type="button"
                             data-bs-toggle="modal"
                             data-bs-target="#modalRegisterForm"
-                            className="btn btn-success"
+                            className="btn "
                           >
+                            
                             <FontAwesomeIcon
-                              icon={["far", "pen-to-square"]}
+                              icon={["far", "pen-to-square"]}style={{ color: "green" }}
                               onClick={() => {
                                 handleModification(
                                   caissier.id,
@@ -187,8 +203,9 @@ function ListeCaissier() {
                           </button>
                           <button
                             type="button"
-                            className="btn btn-danger "
+                            className="btn "
                             onClick={() =>
+                             {setUpdate(false)
                               Swal.fire({
                                 title: "Vous etes sur?",
                                 text: "de vouloir archiver ce caissier!",
@@ -203,9 +220,10 @@ function ListeCaissier() {
                                   handleArchive(false, caissier.id);
                                 }
                               })
+                             }
                             }
                           >
-                            <FontAwesomeIcon icon={["far", "trash-alt"]} />
+                            <FontAwesomeIcon icon={["far", "trash-alt"]} style={{ color: "red" }} />
                           </button>
                         </div>
                       </td>
@@ -258,7 +276,7 @@ function ListeCaissier() {
                             },
                           })}
                           type="text"
-                          value={prenom}
+                          defaultValue={prenom}
                           onChange={handleChange1}
                         />
                         <div>
@@ -284,7 +302,7 @@ function ListeCaissier() {
                             },
                           })}
                           type="text"
-                          value={nom}
+                          defaultValue={nom}
                           onChange={handleChange2}
                         />
                         <div>
@@ -310,7 +328,7 @@ function ListeCaissier() {
                             },
                           })}
                           type="text"
-                          value={email}
+                          defaultValue={email}
                           onChange={handleChange3}
                         />
                         <div>
@@ -323,7 +341,10 @@ function ListeCaissier() {
                       </div>
                       <div className="modal-footer d-flex justify-content-center">
                         <div className="d-flex justify-content-center">
-                          <button className="boutton">Enregistrer</button>
+                          <button type="submit" 
+                          data-bs-dismiss="modal"
+                      aria-label="Close"
+                          className="boutton">Enregistrer</button>
                         </div>
                       </div>
                     </form>
@@ -338,4 +359,4 @@ function ListeCaissier() {
   );
 }
 
-export default ListeCaissier;
+export { ListeCaissier};

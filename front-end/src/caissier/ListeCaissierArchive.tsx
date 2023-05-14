@@ -116,7 +116,7 @@ function ListeCaissier() {
                         <div className="flex justify-center items-center gap-2">
                           <button
                             type="button"
-                            className="btn btn-success"
+                            className="btn"
                             onClick={() =>
                               Swal.fire({
                                 title: "Vous etes sur?",
@@ -134,7 +134,8 @@ function ListeCaissier() {
                               })
                             }
                           >
-                            <FontAwesomeIcon icon={["far", "trash-alt"]} />
+                            <FontAwesomeIcon icon={["far", "trash-alt"]} style={{ color: "green" }} />
+
                           </button>
                         </div>
                       </td>

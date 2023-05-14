@@ -30,7 +30,7 @@ function AjoutProduit() {
       const reponse = await axios.post("http://localhost:3000/produit", {
         libelle: data.libelle,
         cathegorie: data.cathegorie,
-        type: data.type,
+       
         quantite: data.quantite,
         prix: data.prix,
         reference: data.reference,
@@ -109,23 +109,23 @@ function AjoutProduit() {
                   {" "}
                   <div className="d-flex flex-column">
                     <label className="lab" htmlFor="">
-                      Type{" "}
+                      Prix{" "}
                     </label>
                     <input
                       className="form-control border-none"
-                      placeholder="Telephone"
-                      {...register("type", {
+                      placeholder="1500"
+                      {...register("prix", {
                         required: {
                           value: true,
                           message: "ce champ est requis",
                         },
                       })}
-                      type="text"
+                      type="Number"
                     />
                     <div>
-                      {errors.type?.type === "required" && (
+                      {errors.prix?.type === "required" && (
                         <span className="text-danger">
-                          {errors.type.message as unknown as string}
+                          {errors.prix.message as unknown as string}
                         </span>
                       )}
                     </div>
@@ -157,29 +157,7 @@ function AjoutProduit() {
 
                 <div className="d-flex gap-2 justify-content-center">
                   {" "}
-                  <div className="d-flex flex-column">
-                    <label className="lab" htmlFor="">
-                      Prix{" "}
-                    </label>
-                    <input
-                      className="form-control border-none"
-                      placeholder="1500"
-                      {...register("prix", {
-                        required: {
-                          value: true,
-                          message: "ce champ est requis",
-                        },
-                      })}
-                      type="Number"
-                    />
-                    <div>
-                      {errors.prix?.type === "required" && (
-                        <span className="text-danger">
-                          {errors.prix.message as unknown as string}
-                        </span>
-                      )}
-                    </div>
-                  </div>
+                 
                   <div className="d-flex flex-column ">
                     <label className="lab" htmlFor="">
                       Cathégorie{" "}
@@ -194,10 +172,10 @@ function AjoutProduit() {
                       })}
                     >
                       <option value="">Choisir un cathegorie</option>
-                      <option value="Administrateur">Alimentaire</option>
-                      <option value="Caissier">Electronique</option>
-                      <option value="Administrateur">Vestimentaire</option>
-                      <option value="Caissier">Electromenager</option>
+                      <option value="Alimentaire">Alimentaire</option>
+                      <option value="Electronique">Electronique</option>
+                      <option value="Vestimentaire">Vestimentaire</option>
+                      <option value="Electromenager">Electromenager</option>
                     </select>
                     <div>
                       {errors.cathegorie?.type === "required" && (
@@ -207,8 +185,10 @@ function AjoutProduit() {
                       )}
                     </div>
                   </div>
-                </div>
-                <div className="d-flex gap-1 justify-content-center">
+
+
+
+ <div className="d-flex gap-1 justify-content-center">
                   <div className="d-flex  flex-column">
                     <label className="lab" htmlFor="">
                       Photo{" "}
@@ -233,6 +213,9 @@ function AjoutProduit() {
                     </div>
                   </div>
                 </div>
+
+                </div>
+               
                 <div className="textarea ">
                   <div className="w-100">
                     <label className="lab" htmlFor="">

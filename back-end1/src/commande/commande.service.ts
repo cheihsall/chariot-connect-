@@ -13,10 +13,11 @@ export class CommandeService {
   ) {}
   create(commande: Commande): Promise<Commande> {
     return this.commandeRepository.save(commande);
+
   }
 
   findAll(): Promise<Commande[]> {
-    return this.commandeRepository.find();
+    return this.commandeRepository.find({ relations: ['chariot'] });
   }
 
   findOne(id: number) {
@@ -24,7 +25,7 @@ export class CommandeService {
   }
 
   update(id: number, updateCommandeDto: UpdateCommandeDto) {
-    return `This action updates a #${id} commande`;
+     return this.commandeRepository.update(id, updateCommandeDto);
   }
 
   remove(id: number) {
