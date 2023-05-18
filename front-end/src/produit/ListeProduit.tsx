@@ -5,18 +5,21 @@ import { faEye, faEdit, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { stat } from "fs";
 
 library.add(faEye, faEdit, faTrashAlt);
 
 function ListeProduit() {
-  const [users, setUsers] = useState([]);
+  const [Produit, setProduit] = useState([]);
+  const [ProduitArchiver, setProduitArchiver] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [libelle, setLibelle] = useState("");
   const [prix, setPrix] = useState("");
   const [quantite, setQuantite] = useState("");
   const [id, setId] = useState("");
-
+  const [test, settest] = useState(true);
+  const [update, setUpdate] = useState(false);
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
@@ -27,6 +30,19 @@ function ListeProduit() {
     reset,
   } = useForm({ mode: "onChange" });
   const formRef = useRef(null);
+
+  useEffect(() => {
+    const defaultValues: { libelle: any; quantite: any; prix: any } = {
+      libelle: "",
+      quantite: "",
+      prix: "",
+    };
+    defaultValues.libelle = libelle;
+    defaultValues.quantite = quantite;
+    defaultValues.prix = prix;
+    reset({ ...defaultValues });
+  }, [quantite, libelle, prix]);
+
   const handleChange1 = (event: any) => {
     const valeurAfterChangeLibelle = event.target.value;
     setLibelle(valeurAfterChangeLibelle);
@@ -39,14 +55,26 @@ function ListeProduit() {
     const valeurAfterChangePrix = event.target.value;
     setPrix(valeurAfterChangePrix);
   };
+
+  function filterCommande(e: any) {
+    /* if(e.target.value == "tout"){
+      setUsers(commande)
+      return
+    }*/
+    if (e.target.value == "Archiver") {
+      setProduit(ProduitArchiver.filter((data: any) => data.etat == false));
+    } else {
+      setProduit(ProduitArchiver.filter((data: any) => data.etat == true));
+    }
+    // setProduit(ProduitArchiver.filter((com:any)=> e.target.value == "Archiver"? com.etat == 0: com.etat == true ))
+  }
+
   function Modif(id: any, libelle: any, quantite: any, prix: any) {
-    console.log(id);
-    console.log(libelle);
-    console.log(prix);
     setId(id);
     setLibelle(libelle);
     setPrix(prix);
     setQuantite(quantite);
+    setUpdate(false);
   }
 
   const handleArchive = async (etat: any, id: any) => {
@@ -59,7 +87,8 @@ function ListeProduit() {
     });
     const data = await response.json();
     console.log(data);
-    window.location.reload();
+    setUpdate(true);
+    //window.location.reload();
   };
 
   const onSubmit = async (data: any) => {
@@ -77,20 +106,38 @@ function ListeProduit() {
       .then((res) => res.json())
       .then((response) => console.log());
     reset();
-    window.location.reload();
+    setUpdate(true);
+    //window.location.reload();
   };
 
-  useEffect(() => {
+  const loadComponent = () => {
+    return (
+      <>
+        <p>Chargement</p>
+      </>
+    );
+  };
+
+  const fetchProduit = () => {
     fetch("http://localhost:3000/produit/")
       .then((res) => res.json())
       .then((res) => {
-
-        setUsers(res.filter((data: any) => data.etat == true));
-        
-
+        setProduit(res.filter((data: any) => data.etat == true).reverse());
+        // setProduit(res.reverse());
+        //setProduitArchiver(res.reverse());
       });
-  });
-  [];
+    setUpdate(false);
+  };
+
+  useEffect(() => {
+    if (update) {
+      fetchProduit();
+    }
+  }, [update]);
+
+  useEffect(() => {
+    fetchProduit();
+  }, []);
 
   return (
     <>
@@ -99,9 +146,10 @@ function ListeProduit() {
 
         <div className="card ">
           <div className="card head">
-            <h1 className="d-flex justify-content-center w-75">
+            <h1 className="d-flex justify-content-center w-75 border-0">
               {" "}
-              Liste des Produit
+              {/* Liste des Produit : <span> </span> */}
+              Liste des Produits &nbsp;
             </h1>{" "}
             <span className="search w-25">
               <input
@@ -121,30 +169,37 @@ function ListeProduit() {
               </button>{" "}
             </span>
           </div>
-          <div className="table-wrapper">
-            <table className="table table-striped">
+          <div className="table-wrapper " style={{ minHeight: "50vh" }}>
+            <table className="table table-striped ">
               <thead className="sticky-top">
                 <tr>
-                 
                   <th scope="col">Photo</th>
                   <th scope="col">Libelé</th>
                   <th scope="col">Prix</th>
                   <th scope="col">Nbre</th>
-                  <th scope="col">Type</th>
+
                   <th scope="col">Cathegorie</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
-              <tbody>
-                {users
-                  .filter((produit: any) =>
+              {Produit.length === 0 ? (
+                <>
+                  <span
+                    className="spinner-border text-primary"
+                    role="status"
+                  ></span>
+                  <span className="text-muted fs-6 fw-semibold mt-5">
+                    Loading...
+                  </span>
+                </>
+              ) : (
+                <tbody>
+                  {Produit.filter((produit: any) =>
                     `${produit.libelle} ${produit.prix} ${produit.cathegorie}`
                       .toLowerCase()
                       .includes(searchTerm.toLowerCase())
-                  )
-                  .map((produit: any) => (
+                  ).map((produit: any) => (
                     <tr key={produit.id}>
-                     
                       <td>
                         <div>
                           <span>
@@ -162,22 +217,18 @@ function ListeProduit() {
                         </div>
                       </td>
                       <td>
-                        <div className="d-flex justify-content-center justify-items-center align-items-center gap-2">
+                        <div >
                           <span>{produit.prix}</span>
                         </div>
                       </td>
                       <td>
-                        <div className="d-flex justify-content-center justify-items-center align-items-center gap-2">
+                        <div >
                           <span>{produit.quantite}</span>
                         </div>
                       </td>
+
                       <td>
-                        <div className="flex justify-center items-center gap-2">
-                          <span>{produit.type}</span>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="flex justify-center items-center gap-2">
+                        <div>
                           <span>{produit.cathegorie}</span>
                         </div>
                       </td>
@@ -185,7 +236,7 @@ function ListeProduit() {
                       <td>
                         <button
                           type="button"
-                          className="btn   btn-default btn-rounded mb-4"
+                          className="btn   btn-default btn-rounded"
                           data-bs-toggle="modal"
                           data-bs-target="#modalRegisterForm"
                         >
@@ -201,11 +252,12 @@ function ListeProduit() {
                             }}
                           />
                         </button>
-<span>    </span>
+                        <span> </span>
                         <button
                           type="button"
-                          className="btn  btn-default btn-rounded mb-4"
-                          onClick={() =>
+                          className="btn  btn-default btn-rounded "
+                          onClick={() => {
+                            setUpdate(false);
                             Swal.fire({
                               title: "Vous etes sur?",
                               text: "de vouloir archiver ce produit!",
@@ -219,15 +271,16 @@ function ListeProduit() {
                               if (result.isConfirmed) {
                                 handleArchive(false, produit.id);
                               }
-                            })
-                          }
+                            });
+                          }}
                         >
                           <FontAwesomeIcon icon={["far", "trash-alt"]} />
                         </button>
                       </td>
                     </tr>
                   ))}
-              </tbody>
+                </tbody>
+              )}
             </table>
           </div>
           <div className="card head2"></div>
@@ -277,7 +330,7 @@ function ListeProduit() {
                       },
                     })}
                     type="text"
-                    value={libelle}
+                    defaultValue={libelle}
                     onChange={handleChange1}
                   />
                   <div>
@@ -303,7 +356,7 @@ function ListeProduit() {
                       },
                     })}
                     type="text"
-                    value={quantite}
+                    defaultValue={quantite}
                     onChange={handleChange2}
                   />
                   <div>
@@ -329,7 +382,7 @@ function ListeProduit() {
                       },
                     })}
                     type="Number"
-                    value={prix}
+                    defaultValue={prix}
                     onChange={handleChange3}
                   />
                   <div>
@@ -342,7 +395,14 @@ function ListeProduit() {
                 </div>
                 <div className="modal-footer d-flex justify-content-center">
                   <div className="d-flex justify-content-center">
-                    <button className="boutton">Enregistrer</button>
+                    <button
+                      type="submit"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                      className="boutton"
+                    >
+                      Enregistrer
+                    </button>
                   </div>
                 </div>
               </form>

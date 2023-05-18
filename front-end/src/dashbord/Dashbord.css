@@ -1,69 +1,54 @@
 
-.sidebaar{
-    width: 15%;
-    height: 819px;
-    background-color: 
-    #4C7FC7;
-    box-shadow: 7px 6px 10px rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
- display: block;
-  align-items: center;
+.inp {
+  border: none;
+  background: white;
+  outline: none;
+  float: left;
+  padding: 0;
+  color: #FEBC11;
+  font-size: 16px;
+  transition: 0.4s;
+  line-height: 40px;
+  width: 0px;
+}
+
+.btns {
+  display: flex;
   justify-content: center;
-    padding-top: 5%;
-    }
-    
-    .form2{
-        width: 643px;
-        height: 590px;
-        }
+  align-items: center;
+  color: #f9fafa;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #FEBC11;
+  transition: 0.4s;
+  text-decoration: none;
+}
 
-        .menu{
-            background-color: none;
-         width: 70%;
-         height: 5%;
-         color: aliceblue;
-margin: 15%;
-        }
-  
-      .navbaar{
-      
-        height: 101px;
-        border-radius: 5px;
-        background-color:#FEBC11;
-        }
+.search:hover>.inp {
+  width: 240px;
+  padding: 0 6px;
+  top: 50px;
 
-        .popup{
-          background-color: #4C7FC7;
-        }
-    
-        .bttn{
-         
-          color: aliceblue;
-width: 80%;
-height: 5%;
-display: flex;
-justify-content: center;
-justify-items: center;
-align-items: center;
-margin-left: 10%;
-border-radius: 2%;
-font-size: larger;
-margin-bottom: 10%;
-text-decoration: none;
-        }
- 
-   
-   .bttn:hover {
-    background-color: #FEBC11;
-   }   
-      
-   .bttn:active {
-    background-color: #FEBC11;
-   }
-    
-    
-    
-    
-    
-    
-    
+}
+
+
+.search:hover>.btns {
+  color:  #FEBC11;
+  background-color: #1c1b1b;
+}
+
+.search>.inp:focus {
+  width: 240px;
+  padding: 0 6px;
+  top: 50px;
+
+}
+
+
+.fixed-table {
+  width: 100%; /* définissez la largeur de la table à 100% */
+  height: 400px; /* définissez la hauteur de la table à la valeur de votre choix */
+  overflow-y: scroll; /* activez la barre de défilement verticale si nécessaire */
+}
+

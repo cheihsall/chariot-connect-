@@ -3,7 +3,7 @@ import "./ListeCaissier.css";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from "sweetalert2";
-
+import { Link } from "react-router-dom";
 
 function ListeCaissier() {
   const [count, setCount] = useState(0);
@@ -26,14 +26,17 @@ function ListeCaissier() {
   };
 
   const formRef = useRef(null);
-useEffect(()=>{
-  const defaultValues : { prenom: string, nom: string, email: string} = { prenom: "", nom:"", email:""}
-  defaultValues.prenom = prenom;
-  defaultValues.nom = nom;
-  defaultValues.email = email;
-  reset({...defaultValues})
-
-},[nom, prenom, email])
+  useEffect(() => {
+    const defaultValues: { prenom: string; nom: string; email: string } = {
+      prenom: "",
+      nom: "",
+      email: "",
+    };
+    defaultValues.prenom = prenom;
+    defaultValues.nom = nom;
+    defaultValues.email = email;
+    reset({ ...defaultValues });
+  }, [nom, prenom, email]);
   const handleChange1 = (event: any) => {
     const valeurAfterChangePrenom = event.target.value;
     setPrenom(valeurAfterChangePrenom);
@@ -50,7 +53,6 @@ useEffect(()=>{
   };
 
   const handleModification = (id: any, prenom: any, nom: any, email: any) => {
-   
     setId(id);
     setPrenom(prenom);
     setNom(nom);
@@ -89,28 +91,25 @@ useEffect(()=>{
     setUpdate(true);
   };
 
-  const fetchUsers =  () => {
+  const fetchUsers = () => {
     fetch("http://localhost:3000/users")
       .then((res) => res.json())
-      .then((res) => { 
+      .then((res) => {
         // const use = res.etat = 0
         setCaissiers(res.filter((data: any) => data.etat == true));
       });
-      setUpdate(false)
-  }
+    setUpdate(false);
+  };
 
   useEffect(() => {
-    if(update) {
-      fetchUsers()
+    if (update) {
+      fetchUsers();
     }
-  },[update]);
+  }, [update]);
 
   useEffect(() => {
-    fetchUsers()
-  },[])
- 
-  
-  
+    fetchUsers();
+  }, []);
 
   return (
     <>
@@ -119,6 +118,31 @@ useEffect(()=>{
 
         <div className="card ">
           <div className="card head">
+            <Link to="../listecaissierArchive">
+              <a
+                className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
+                href="#"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3"
+                  />
+                </svg>
+
+                <span className="mx-2 text-sm font-medium">
+                  Caissiers Archivés
+                </span>
+              </a>
+            </Link>
             <h1 className="d-flex justify-content-center w-75">
               {" "}
               Liste des Caissiers
@@ -141,11 +165,10 @@ useEffect(()=>{
               </button>{" "}
             </span>
           </div>
-          <div className="table-wrapper">
+          <div className="table-wrapper" style={{ minHeight: "50vh" }}>
             <table className="table table-striped  ">
               <thead className="sticky-top">
                 <tr>
-                 
                   <th scope="col">Prenom</th>
                   <th scope="col">Nom</th>
                   <th scope="col">Email</th>
@@ -162,35 +185,33 @@ useEffect(()=>{
                   )
                   .map((caissier: any) => (
                     <tr key={caissier.id}>
-                     
-
                       <td>
-                        <div className="flex justify-center items-center gap-2">
+                        <div>
                           <span>{caissier.prenom}</span>
                         </div>
                       </td>
                       <td>
-                        <div className="flex justify-center items-center gap-2">
+                        <div>
                           <span>{caissier.nom}</span>
                         </div>
                       </td>
                       <td>
-                        <div className="flex justify-center items-center gap-2">
+                        <div>
                           <span>{caissier.email}</span>
                         </div>
                       </td>
 
                       <td>
-                        <div className="flex justify-center items-center gap-2">
+                        <div>
                           <button
                             type="button"
                             data-bs-toggle="modal"
                             data-bs-target="#modalRegisterForm"
                             className="btn "
                           >
-                            
                             <FontAwesomeIcon
-                              icon={["far", "pen-to-square"]}style={{ color: "green" }}
+                              icon={["far", "pen-to-square"]}
+                              style={{ color: "green" }}
                               onClick={() => {
                                 handleModification(
                                   caissier.id,
@@ -204,8 +225,8 @@ useEffect(()=>{
                           <button
                             type="button"
                             className="btn "
-                            onClick={() =>
-                             {setUpdate(false)
+                            onClick={() => {
+                              setUpdate(false);
                               Swal.fire({
                                 title: "Vous etes sur?",
                                 text: "de vouloir archiver ce caissier!",
@@ -219,11 +240,13 @@ useEffect(()=>{
                                 if (result.isConfirmed) {
                                   handleArchive(false, caissier.id);
                                 }
-                              })
-                             }
-                            }
+                              });
+                            }}
                           >
-                            <FontAwesomeIcon icon={["far", "trash-alt"]} style={{ color: "red" }} />
+                            <FontAwesomeIcon
+                              icon={["far", "trash-alt"]}
+                              style={{ color: "red" }}
+                            />
                           </button>
                         </div>
                       </td>
@@ -341,10 +364,14 @@ useEffect(()=>{
                       </div>
                       <div className="modal-footer d-flex justify-content-center">
                         <div className="d-flex justify-content-center">
-                          <button type="submit" 
-                          data-bs-dismiss="modal"
-                      aria-label="Close"
-                          className="boutton">Enregistrer</button>
+                          <button
+                            type="submit"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                            className="boutton"
+                          >
+                            Enregistrer
+                          </button>
                         </div>
                       </div>
                     </form>
@@ -359,4 +386,4 @@ useEffect(()=>{
   );
 }
 
-export { ListeCaissier};
+export { ListeCaissier };

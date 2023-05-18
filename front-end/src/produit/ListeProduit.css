@@ -55,14 +55,8 @@
   padding-top: 1%;
 }
 
-.table-wrapper {
-  max-height: 500px;
-  overflow-y: auto;
-}
 
-table {
-  height: 100%;
-}
+
 
 tbody {
 }
@@ -195,4 +189,40 @@ tbody {
   margin-top: 12px;
 }
 
+.select{
+  background-color: #4C7FC7;
+  color: #f9fafa;
+  border: none;
+  box-shadow: none;
+}
+.option{
+  border: none;
+}
 
+
+.loading-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.loading-table th,
+.loading-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.loading-animation {
+  animation: loading 1s infinite ease-in-out;
+}
+
+@keyframes loading {
+  0% {
+    background-color: #f2f2f2;
+  }
+  50% {
+    background-color: #e6e6e6;
+  }
+  100% {
+    background-color: #f2f2f2;
+  }
+}
