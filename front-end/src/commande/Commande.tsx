@@ -120,7 +120,7 @@ function Commande() {
       } else {
         setCom(data);
         const id = data; // Remplacez "votre_id" par l'ID souhaité
-        navigate(`dashbord/Dcommande`, { state: { id } });
+        navigate(`/dashbord/Dcommande`, { state: { id } });
       }
     });
     socket.on("introuvable", (data) => {
