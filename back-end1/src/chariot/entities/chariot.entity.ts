@@ -21,10 +21,7 @@ export class Chariot {
 
   @CreateDateColumn({ type: 'timestamp', precision: 3 })
   date: Date;
-<<<<<<< HEAD:back-end/src/chariot/entities/chariot.entity.ts
-=======
 
   @OneToMany((type) => Commande, (commande) => commande.chariot)
   commandes: Commande[]; // Utilisez le type approprié pour la relation avec Commande
->>>>>>> main:back-end1/src/chariot/entities/chariot.entity.ts
 }
