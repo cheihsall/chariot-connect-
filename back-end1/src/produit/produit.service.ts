@@ -24,11 +24,13 @@ export class ProduitService {
   }
 
   findAll(): Promise<Produit[]> {
+    console.log('entre dans le service');
+
     return this.produitRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} produit`;
+    return this.produitRepository.findOneBy({ id: id });
   }
 
   update(id: number, updateProduitDto: UpdateProduitDto) {

@@ -17,7 +17,7 @@ export class Commande {
 
   @ManyToOne(type => User)
   @JoinColumn()
-  user: number;
+  user: number | null;
 
   @ManyToOne(type => Chariot)
   @JoinColumn()

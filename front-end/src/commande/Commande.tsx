@@ -120,7 +120,9 @@ function Commande() {
       } else {
         setCom(data);
         const id = data; // Remplacez "votre_id" par l'ID souhaité
-        navigate(`/dashbord/Dcommande`, { state: { id } });
+
+        navigate(`/dashboard/Dcommande`, { state: { id } });
+
       }
     });
     socket.on("introuvable", (data) => {
@@ -313,7 +315,7 @@ function Commande() {
                         </td>
 
                         <td>
-                          <Link to="../Dcommande?" state={{ id: Produit.id }}>
+                          <Link to="Dcommande?" state={{ id: Produit.id }}>
                             {" "}
                             <button
                               type="button"
