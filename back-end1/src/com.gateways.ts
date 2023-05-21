@@ -69,39 +69,35 @@ export class ComGateway {
       }
 
       //const commande = await this.commande.find({ relations: ['chariot'] });
-      const commande = await this.commande.findOne({
+      const commande = await this.commande.find({
         where: { chariot: chariot },
         relations: ['chariot'],
       });
 
-      if (!commande) {
+      if (commande.length == 0) {
         console.log('La commande nexiste pas');
         this.server.emit('introuvable', 2);
         port.write('0');
         return;
       }
-      if (commande && commande.etat == false) {
-        const date = commande.date
-          ? commande.date.toISOString().split('T')[0]
-          : null;
-        const heure = commande.date
-          ? commande.date.toTimeString().split(' ')[0]
-          : null;
-
-        const dateHeure = date && heure ? `${date} à ${heure}` : null;
-
-        console.log('La commande a ete deja valider le :', commande.date);
+      let cpt = commande.length;
+      commande.forEach((element) => {
+        cpt--;
+        if (element && element.etat == true) {
+          //console.log('Chariot trouvé :', chariot);
+          console.log('Chariot trouvé :', element.id);
+          this.server.emit('data', element.id);
+          port.write('1');
+          cpt = 1;
+          return;
+          // Effectuez d'autres opérations avec les informations du chariot
+        }
+      });
+      console.log(cpt);
+      if (cpt == 0) {
         this.server.emit('introuvable', 3);
         port.write('0');
-        this.server.emit('date', dateHeure);
         return;
-      }
-      if (commande && commande.etat == true) {
-        //console.log('Chariot trouvé :', chariot);
-        console.log('Chariot trouvé :', commande.id);
-        this.server.emit('data', commande.id);
-        port.write('1');
-        // Effectuez d'autres opérations avec les informations du chariot
       }
     } catch (error) {
       console.error("Une erreur s'est produite :", error);

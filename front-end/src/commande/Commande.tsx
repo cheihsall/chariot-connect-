@@ -120,7 +120,9 @@ function Commande() {
       } else {
         setCom(data);
         const id = data; // Remplacez "votre_id" par l'ID souhaité
+
         navigate(`/dashboard/Dcommande`, { state: { id } });
+
       }
     });
     socket.on("introuvable", (data) => {
@@ -154,7 +156,7 @@ function Commande() {
         setCom([]);
       }
       if (data == 3)
-        socket.on("date", (date) => {
+        
          
           //let timerInterval: string | number | NodeJS.Timer | undefined
           {
@@ -162,7 +164,7 @@ function Commande() {
               title: " cet commande a ete deja valider",
               icon: "error",
               // iconHtml: '؟',
-              html:  ` à la date du ${date} `,
+
               // Html: date,
               timer: 5000,
               timerProgressBar: true,
@@ -186,7 +188,7 @@ function Commande() {
             setCom([]);
             // alert('commande introuvable')
           }
-        });
+        
       if (data == 2) {
         Swal.fire({
           title: "Verifier si la commande a ete valider par le client!",

@@ -1,3 +1,4 @@
+
 import "./Dashbord.css";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../node_modules/bootstrap/dist/js/bootstrap.min.js";
@@ -13,6 +14,7 @@ import * as React from 'react';
 
 
 import StatisTique from './statistique';
+
 
 
 export default function Dashbord() {
