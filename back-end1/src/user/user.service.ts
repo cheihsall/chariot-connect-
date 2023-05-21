@@ -79,11 +79,46 @@ export class UserService {
     return this.usersRepository.findOneBy({ email });
   }
 
+
   async update(id: number, updateUsersDto: any) {
+    try {
+      const user = await this.usersRepository.findOne({ where: { id: id } });
+  
+      if (!user) {
+        throw new UnauthorizedException({
+          message: 'utulisateur introuvable',
+        });
+      }
+  
+      // Vérifier si le nouvel email est déjà utilisé par un autre utilisateur
+      if (updateUsersDto.email) {
+        const existingUser = await this.usersRepository.findOne({
+          where: { email: updateUsersDto.email },
+        });
+        if (existingUser && existingUser.id !== id) {
+          throw new UnauthorizedException({
+            message: 'cet email existe deja',
+          });
+        }
+      }
+  
+      // Mettre à jour les propriétés de l'utilisateur avec les données fournies
+      const updatedUser = { ...user, ...updateUsersDto };
+      await this.usersRepository.save(updatedUser);
+  
+      return updatedUser;
+    } catch (error) {
+      console.log(
+        `Erreur lors de la mise à jour de l'utilisateur : ${error.message}`,
+      );
+    }
+  }
+  
+  /*async update(id: number, updateUsersDto: any) {
    
     
     return this.usersRepository.update(id, updateUsersDto);
-  }
+  }*/
 
 
   async remove(id: number): Promise<void> {

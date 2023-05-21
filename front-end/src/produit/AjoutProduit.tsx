@@ -48,14 +48,14 @@ function AjoutProduit() {
         {/* <ReactLogo/>*/}
 
         <div className="d-flex">
-          <div className="form1">
+          <div className="">
             <div className="formm">
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 ref={formRef}
                 className="formulaire gap-3 d-flex flex-column justify-content-center"
               >
-                <div className="d-flex gap-2 justify-content-center">
+                <div className="d-flex gap-5 justify-content-center">
                   <div className="d-flex flex-column ">
                     <label className="lab" htmlFor="">
                       Reference{" "}
@@ -105,7 +105,7 @@ function AjoutProduit() {
                   </div>
                 </div>
 
-                <div className="d-flex gap-2 justify-content-center">
+                <div className="d-flex gap-5 justify-content-center">
                   {" "}
                   <div className="d-flex flex-column">
                     <label className="lab" htmlFor="">
@@ -155,7 +155,7 @@ function AjoutProduit() {
                   </div>
                 </div>
 
-                <div className="d-flex gap-2 justify-content-center">
+                <div className="d-flex gap-5 justify-content-center ml-6">
                   {" "}
                  
                   <div className="d-flex flex-column ">
@@ -188,8 +188,8 @@ function AjoutProduit() {
 
 
 
- <div className="d-flex gap-1 justify-content-center">
-                  <div className="d-flex  flex-column">
+
+                  <div className="d-flex w-25 flex-column">
                     <label className="lab" htmlFor="">
                       Photo{" "}
                     </label>
@@ -211,7 +211,7 @@ function AjoutProduit() {
                         </span>
                       )}
                     </div>
-                  </div>
+                  
                 </div>
 
                 </div>

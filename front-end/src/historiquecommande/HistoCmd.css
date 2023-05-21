@@ -1,40 +1,11 @@
-.carte{
-    background-color: #4C7FC7;
-    width: 290px;
-    height: 140px;
-    box-shadow: 6px 6px 5px rgba(254, 188, 17, 0.51);
-border-radius: 5px;
-color: aliceblue;
-display: flex;
-justify-content: center;
-align-items: center;
 
-}
-.cart2{
-    margin-left: 6em;
-    margin-right: 6em;
-}
 .inputt{
     width: 16%;
     height: 60%;
     border: none;
     border-radius: 5%;
 }
-.cartemere{
-    margin-bottom: 2%;
-   padding-left: 8%;
-    width:1350px;
-    height: 140px;
-   display: flex;
-   flex-direction: row;
-   justify-content: center;
-    border-radius: 5px;
-    background-color:none;
-    border: none;
-    padding: 5px;
-  
-    
-}
+
 
 .head{
     width: 100%;

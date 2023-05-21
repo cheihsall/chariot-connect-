@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateChariotDto } from './dto/create-chariot.dto';
 import { UpdateChariotDto } from './dto/update-chariot.dto';
 import { Chariot } from './entities/chariot.entity';
@@ -12,9 +12,31 @@ export class ChariotService {
     private chariotRepository: Repository<Chariot>,
   ) {}
 
-  create(chariot: Chariot): Promise<Chariot> {
+  /*create(chariot: Chariot): Promise<Chariot> {
     return this.chariotRepository.save(chariot);
-  }
+  }*/
+  async create(chariot: Chariot): Promise<Chariot> {
+   // create(user: User): Promise<User> {
+   /* return new Promise(async (resolve, reject) => {
+      try {*/
+        const existingChariot = await this.chariotRepository.findOne({
+          where: { reference: chariot.reference },
+        });
+
+        if (existingChariot) {
+          throw new UnauthorizedException({
+            message: 'cet chariot existe deja',
+          });
+         
+        }
+
+        return this.chariotRepository.save(chariot);
+        //resolve(newChariot);
+      } /*catch (error) {
+        reject("Une erreur s'est produite lors de la création du chariot");
+      }*/
+    
+  
 
   findAll(): Promise<Chariot[]> {
     return this.chariotRepository.find();

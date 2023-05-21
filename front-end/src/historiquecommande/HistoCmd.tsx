@@ -31,7 +31,7 @@ function HistoCmd() {
       return
     }
 
-    setUsers(commande.filter((com:any)=> e.target.value == "valider"? com.etat == true: com.etat == false ))
+    setUsers(commande.filter((com:any)=> e.target.value == "valider"? com.etat == false: com.etat == true ))
   
   }
 
@@ -73,17 +73,17 @@ function HistoCmd() {
 
         <div className="card ">
           <div className="card head">
-            <select name="" id="" onChange={(e)=>filterCommande(e)}>
+            <select className="text-white bg-[#4C7FC7] right-0" name="" id="" onChange={(e)=>filterCommande(e)}>
               <option value="tout">tout</option>
               <option value="valider">valider</option>
               <option value="non valider">non valider</option>
             </select>
           </div>
-          <div className="table-wrapper">
+          <div className="table-wrapper" style={{ minHeight: "60vh" }}>
             <table className="table table-striped">
               <thead className="sticky-top">
                 <tr>
-                  <th scope="col">N° commande</th>
+                  <th  scope="col">N° commande</th>
 
                   <th scope="col">Prix Total</th>
                   <th scope="col">Chariot</th>
@@ -96,28 +96,28 @@ function HistoCmd() {
                 {users?.map((Produit: any, index: number) => (
                   <tr key={index}>
                     <th scope="row">
-                      <div className="flex justify-center items-center gap-2">
+                      <div>
                         <span>{Produit.id}</span>
                       </div>
                     </th>
                     <td>
-                      <div className="flex justify-center items-center gap-2">
+                      <div >
                         <span>{Produit.montant}</span>
                       </div>
                     </td>
                     <td>
-                      <div className="flex justify-center items-center gap-2">
+                      <div >
                         <span>{Produit.chariot.reference}</span>
                       </div>
                     </td>
                     <td>
-                      <div className="flex justify-center items-center gap-2">
-                        <span>{Produit.etat ? "valider" : "non valider"}</span>
+                      <div >
+                        <span>{Produit.etat ? "non valider" : "valider"}</span>
                       </div>
                     </td>
 
                     <td>
-                      <div className="flex justify-center items-center gap-2">
+                      <div >
                         <span>{Produit.date?.split('T')[0]} à {Produit.date?.split('T')[1].split('Z')[0].split('.')[0]}</span>
                       </div>
                     </td>

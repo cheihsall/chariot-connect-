@@ -13,7 +13,7 @@ library.add(faEye, faEdit, faTrashAlt, faCircleXmark);
 
 function DetailCommande() {
   const [count, setCount] = useState(0);
-  let {state} = useLocation()
+  const {state} = useLocation()
   const {
     register,
     handleSubmit,
@@ -90,7 +90,7 @@ const [ id, setId] = useState("")
 
         <div className="card ">
           <div className="card head"></div>
-          <div className="table-wrapper">
+          <div className="table-wrapper" style={{ minHeight: "50vh"}}>
             <table className="table table-striped">
               <thead className="sticky-top">
                 <tr>
@@ -101,30 +101,31 @@ const [ id, setId] = useState("")
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
+             
               <tbody>
                 {users?.map((detail: any) => (
                   
                   <>
                     <tr>
                       <th scope="row">
-                        <div className="flex justify-center items-center gap-2">
+                        <div >
                         <span>{detail.produit.libelle}</span>
                         </div>
                       </th>
                       <td>
-                        <div className="flex justify-center items-center gap-2">
+                        <div >
                           <span>{detail.produit.prix}</span>
                         </div>
                       </td>
                       <td>
-                        <div className="flex justify-center items-center gap-2">
+                        <div >
                           <span>{detail.produit.quantite}</span>
                         </div>
                       </td>
 
                       <td>
                         <button  type="button"
-                          className="btn   btn-default btn-rounded mb-4"
+                          className="btn   btn-default btn-rounded "
                           data-bs-toggle="modal"
                           data-bs-target="#modalRegisterForm">
                           <FontAwesomeIcon icon={["far", "circle-xmark"]} style={{ color: "red" }}
@@ -134,8 +135,9 @@ const [ id, setId] = useState("")
                       </td>
                     </tr>
                   </>
-                ))}
+                )) }
               </tbody>
+           
             </table>
           </div>
           <div className="card head2">
