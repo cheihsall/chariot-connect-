@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEye, faEdit, faTrashAlt, faCircle, faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { log } from "console";
 import { useLocation, useParams } from "react-router-dom";
 
 library.add(faEye, faEdit, faTrashAlt, faCircleXmark);
