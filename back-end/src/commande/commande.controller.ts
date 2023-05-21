@@ -20,6 +20,11 @@ export class CommandeController {
     return this.commandeService.create(createCommandeDto);
   }
 
+  @Post('add')
+  add(@Body() createCommandeDto) {
+    return this.commandeService.add(createCommandeDto);
+  }
+
   @Get()
   findAll() {
     return this.commandeService.findAll();

@@ -12,7 +12,7 @@ export class DetailCommandeService {
     private dcommandeRepository: Repository<DetailCommande>,
   ) {}
 
-  create(detailcommande: DetailCommande): Promise<DetailCommande> {
+  create(detailcommande): Promise<DetailCommande> {
     return this.dcommandeRepository.save(detailcommande);
   }
 
@@ -23,14 +23,14 @@ export class DetailCommandeService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} detailCommande`;
+    return this.dcommandeRepository.findOneBy({ id: id });
   }
 
-  update(id: number, updateDetailCommandeDto: UpdateDetailCommandeDto) {
-    return `This action updates a #${id} detailCommande`;
+  update(id: number, updateDetailCommandeDto) {
+    return this.dcommandeRepository.update(id, updateDetailCommandeDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} detailCommande`;
+    return this.dcommandeRepository.delete(id);
   }
 }

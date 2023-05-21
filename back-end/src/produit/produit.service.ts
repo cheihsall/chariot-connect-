@@ -28,7 +28,7 @@ export class ProduitService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} produit`;
+    return this.produitRepository.findOneBy({ id: id });
   }
 
   update(id: number, updateProduitDto: UpdateProduitDto) {

@@ -15,5 +15,4 @@ export class Chariot {
 
   @CreateDateColumn({ type: 'timestamp', precision: 3 })
   date: Date;
-  
 }
