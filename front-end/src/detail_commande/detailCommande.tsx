@@ -101,6 +101,7 @@ const [ id, setId] = useState("")
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
+             
               <tbody>
                 {users?.map((detail: any) => (
                   
@@ -134,8 +135,9 @@ const [ id, setId] = useState("")
                       </td>
                     </tr>
                   </>
-                ))}
+                )) }
               </tbody>
+           
             </table>
           </div>
           <div className="card head2">

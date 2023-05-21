@@ -8,7 +8,12 @@ import { useForm } from "react-hook-form";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEye, faEdit, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { Link, redirect } from "react-router-dom";
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://localhost:3000";
+import { Console } from "console";
 
 library.add(faEye, faEdit, faTrashAlt);
 
@@ -28,23 +33,11 @@ function Commande() {
   const [verse, setVerse] = useState(0);
   const [rendu, setRendu] = useState(0);
   const [users, setUsers] = useState<any>([]);
-
-  function formatDate(date: string): string {
-    const d = new Date(date);
-    const formattedDate = `${("0" + d.getDate()).slice(-2)}-${(
-      "0" +
-      (d.getMonth() + 1)
-    ).slice(-2)}-${d.getFullYear()}`;
-    const formattedTime = `${("0" + d.getHours()).slice(-2)}:${(
-      "0" + d.getMinutes()
-    ).slice(-2)}:${("0" + d.getSeconds()).slice(-2)}`;
-    return `${formattedDate} à ${formattedTime}`;
-  }
-
   const [user_id, setInfo3] = useState(localStorage.getItem("id_user"));
   const [montant, setMontant] = useState("");
   const [id, setId] = useState("");
-
+  const [com, setCom] = useState([]);
+  const [secondes, setSeconde] = useState(0);
   function handleValider(id: any, montant: any, user: any) {
     console.log(id);
     console.log(montant);
@@ -53,6 +46,177 @@ function Commande() {
     setMontant(montant);
     setInfo3(user);
   }
+  const navigate = useNavigate();
+
+  const [currentTime, setCurrentTime] = useState("");
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const date = new Date();
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+      const seconds = date.getSeconds();
+      setCurrentTime(`${hours}:${minutes}:${seconds}`);
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  if (currentTime == "1:37:10") {
+    // Effectuer la redirection vers Dcommande avec l'ID
+    console.log("rrrrrrrrrrrrrr");
+    const id = "2"; // Remplacez "votre_id" par l'ID souhaité
+    navigate(`dashbord/Dcommande`, { state: { id } });
+  }
+
+  let timerInterval: string | number | NodeJS.Timer | undefined;
+  /* // Obtenir l'heure actuelle
+    useEffect(() => {
+      const timeoutId = setTimeout(() => {
+        // Obtenir l'heure actuelle
+        const date = new Date();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const seconds = date.getSeconds();
+        setSeconde(secondes)
+  console.log(seconds)
+        // Vérifier si l'heure est 01:03:00
+        if (seconds === 10) {
+          // Effectuer la redirection vers Dcommande avec l'ID
+           console.log('rrrrrrrrrrrrrrrrr')
+          const id = "4"; // Remplacez "votre_id" par l'ID souhaité
+          navigate(`../Dcommande`, { state: { id } });
+        }
+      }, 100); // Vérifier toutes les secondes (1000 ms)
+  
+      return () => {
+        // Nettoyage du timeout lors du démontage du composant
+        clearTimeout(timeoutId);
+      };
+    }, []);
+ 
+  
+
+ if (count) {
+    const id = count;
+    navigate.push({
+      pathname: '../Dcommande',
+      state: { id: id }
+    });
+  }
+  if (count) {
+    const id = count;
+    history.push(`../Dcommande?id=${id}`);
+  }*/
+
+  useEffect(() => {
+    const socket = socketIOClient(ENDPOINT);
+    socket.on("data", (data) => {
+      console.log(data);
+      if (data == "Compte archivé") {
+        setCom([]);
+      } else {
+        setCom(data);
+        const id = data; // Remplacez "votre_id" par l'ID souhaité
+        navigate(`dashbord/Dcommande`, { state: { id } });
+      }
+    });
+    socket.on("introuvable", (data) => {
+      console.log(data);
+      if (data == 1) {
+        //  let timerInterval: string | number | NodeJS.Timer | undefined
+        Swal.fire({
+          title: "Le Chariot est introuvable!",
+          icon: "question",
+          iconHtml: "؟",
+          html: "cet chariot n est pas dans la base de donnee.",
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            //const b = Swal.getHtmlContainer().querySelector('b')
+            timerInterval = setInterval(() => {
+              //  b.textContent = Swal.getTimerLeft()
+            }, 100);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          },
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+            console.log("I was closed by the timer");
+          }
+        });
+        //  alert('chariot introuvable')
+        setCom([]);
+      }
+      if (data == 3)
+        socket.on("date", (date) => {
+         
+          //let timerInterval: string | number | NodeJS.Timer | undefined
+          {
+            Swal.fire({
+              title: " cet commande a ete deja valider",
+              icon: "error",
+              // iconHtml: '؟',
+              html:  ` à la date du ${date} `,
+              // Html: date,
+              timer: 5000,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading();
+                //const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                  //  b.textContent = Swal.getTimerLeft()
+                }, 100);
+              },
+              willClose: () => {
+                clearInterval(timerInterval);
+              },
+            }).then((result) => {
+              /* Read more about handling dismissals below */
+              if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("I was closed by the timer");
+              }
+            });
+
+            setCom([]);
+            // alert('commande introuvable')
+          }
+        });
+      if (data == 2) {
+        Swal.fire({
+          title: "Verifier si la commande a ete valider par le client!",
+          icon: "warning",
+          // iconHtml: '؟',
+          html: "commande introuvable.",
+          timer: 5000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            //const b = Swal.getHtmlContainer().querySelector('b')
+            timerInterval = setInterval(() => {
+              //  b.textContent = Swal.getTimerLeft()
+            }, 100);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          },
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+            console.log("I was closed by the timer");
+          }
+        });
+        // alert('commande deja validé')
+        setCom([]);
+      }
+    }),
+      [com];
+  });
 
   useEffect(() => {
     fetch("http://localhost:3000/commande")
@@ -88,9 +252,11 @@ function Commande() {
     <>
       <div className=" p-3 w-100 align-items-center">
         {/* <ReactLogo/>*/}
-
+    
         <div className="card ">
-          <div className="card head">
+         
+          <div className="card head"> 
+          <h2>Les commandes</h2> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             <span className="search w-25 mb-3">
               <input
                 className="inp form-control border-none"
@@ -266,7 +432,7 @@ function Commande() {
                     {...register("rendu", {
                       required: {
                         value: true,
-                        message: "ce champ est requis",
+                        message: "ce champ est requis", 
                       },
                     })}
                     type="Number"
