@@ -24,6 +24,8 @@ export class ProduitService {
   }
 
   findAll(): Promise<Produit[]> {
+    console.log('entre dans le service');
+
     return this.produitRepository.find();
   }
 

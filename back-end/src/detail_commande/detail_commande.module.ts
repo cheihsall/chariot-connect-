@@ -13,11 +13,7 @@ import { ProduitModule } from 'src/produit/produit.module';
 @Module({
   controllers: [DetailCommandeController],
   providers: [DetailCommandeService, CommandeService, ProduitService],
-  imports: [
-    TypeOrmModule.forFeature([DetailCommande, Commande, Produit]),
-    CommandeModule,
-    ProduitModule,
-  ],
+  imports: [TypeOrmModule.forFeature([DetailCommande, Commande, Produit])],
   exports: [DetailCommandeService],
 })
 export class DetailCommandeModule {}

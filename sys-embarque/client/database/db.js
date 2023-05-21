@@ -4,7 +4,7 @@ const db = SQLite.openDatabase('achats.db');
 const createTable = () => {
     db.transaction((tx) => {
         tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS ventes (id INTEGER PRIMARY KEY AUTOINCREMENT, libelle TEXT, reference TEXT, quantite INT, prix INT);'
+        'CREATE TABLE IF NOT EXISTS ventes (id INTEGER PRIMARY KEY AUTOINCREMENT, libelle TEXT, reference TEXT, quantite INT, prix INT, produitId INT);'
         );
     });
 }
@@ -19,11 +19,11 @@ const dropTable = () => {
 }
 
 // Define a function to insert a new record into the table
-const insertRecord = (libelle, reference, quantite, prix) => {
+const insertRecord = (libelle, reference, quantite, prix, produitId) => {
     db.transaction((tx) => {
         tx.executeSql(
-        'INSERT INTO ventes (libelle, reference, quantite, prix) VALUES (?, ?, ?, ?);',
-        [libelle, reference, quantite, prix],
+        'INSERT INTO ventes (libelle, reference, quantite, prix, produitId) VALUES (?, ?, ?, ?, ?);',
+        [libelle, reference, quantite, prix, produitId],
         () => {
             console.log('Record inserted successfully!');
         },

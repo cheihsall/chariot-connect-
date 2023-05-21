@@ -45,13 +45,24 @@ const Achats = () => {
     ]);
   };
 
+  //arduino socket
+
   const sendToDistanteServer = () => {
-    fetch('/api/achats', {
+    console.log(records);
+    const commande = {}
+    commande.chariot = 1;
+    commande.produit = [];
+    records.forEach((record) => {
+      commande.produit.push({id: record.produitId, quantite: record.quantite});
+    });
+    commande.montant = records.reduce((a, b) => a + (b['prix'] || 0), 0);
+
+   fetch('http://192.168.1.151:3000/commande/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(records),
+      body: JSON.stringify(commande),
     })
       .then((response) => response.json())
       .then((data) => {

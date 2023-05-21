@@ -12,7 +12,7 @@ const { width, height } = Dimensions.get('window');
 const scannerWidth = width * 0.8;
 const scannerHeight = scannerWidth;
 
-import { createServer } from "miragejs"
+/* import { createServer } from "miragejs"
 
 if (window.server) {
   server.shutdown()
@@ -24,7 +24,7 @@ window.server = createServer({
       return {
         products: [
           { id: 1, libelle: "Lait", reference: "6923052271683", prix: 5000 },
-          { id: 2, libelle: "Filament 3D", reference: "9782296998841", prix: 50000 },
+          { id: 2, libelle: "Filament 3D", reference: "1441172945", prix: 50000 },
         ],
       }
     })
@@ -34,14 +34,14 @@ window.server = createServer({
       console.log(reference);
       const product = [
         { id: 1, libelle: "Lait", reference: "6923052271683", prix: 5000 },
-        { id: 2, libelle: "Filament 3D", reference: "9782296998841", prix: 50000 },
+        { id: 2, libelle: "Filament 3D", reference: "1441172945", prix: 50000 },
       ].find((product) => product.reference == reference)
       return {
         product: product,
       }
     })
   },
-})
+}) */
 
 
 const Ascan = ({ navigation }) => {
@@ -95,6 +95,24 @@ const Ascan = ({ navigation }) => {
       : undefined;
   }, [sound]);
 
+  useEffect(() => {
+    db1.transaction((tx) => {
+      tx.executeSql(
+      'SELECT * FROM ventes;',
+      [],
+      (_, { rows }) => {
+          console.log('Records retrieved successfully');
+          console.log(rows);
+          setAchats(rows._array);
+      },
+      (_, error) => {
+
+          console.log('Error retrieving records:', error);
+      }
+      );
+    });
+  }, []);
+
  /* Beep */
 
   const handleBarCodeScanned = ({ type, data, bounds }) => {
@@ -103,10 +121,14 @@ const Ascan = ({ navigation }) => {
     let product = {}
     let quantite = 1;
     let prix = 0;
-    fetch("/api/produits/" + data).then((res) => res.json()).then((productInfo) => {
+    //fetch("http://192.168.1.151:3000/produit/reference/"+ data).then((res) => res.json()).then((products) => console.log(products));
+    fetch("http://192.168.1.151:3000/produit/reference/"+ data).then((res) => res.json()).then((productInfo) => {
+      console.log("productInfo", productInfo);
       //db.dropTable();
       console.log(data);
-     product = productInfo.product;
+      ///db.insertRecord(productInfo.product.libelle, productInfo.product.reference, quantite, productInfo.product.prix);
+     product = productInfo;
+     console.log(product);
       db.db.transaction((tx) => {
         tx.executeSql(
         'SELECT * FROM ventes WHERE reference = ?;',
@@ -115,12 +137,14 @@ const Ascan = ({ navigation }) => {
             console.log('Record retrieved successfully');
             console.log(rows);
             if (rows.length > 0) {
+              console.log("entree");
               quantite = rows._array[0].quantite + 1;
               prix = product.prix * quantite;
               db.updateRecord(product.reference, quantite, prix);
               console.log('Record updated successfully');
             } else {
-              db.insertRecord(product.libelle, product.reference, quantite, product.prix);
+              console.log("entree 122");
+              db.insertRecord(product.libelle, product.reference, quantite, product.prix, product.id);
               console.log('Record inserted successfully');
             }
         },
@@ -130,6 +154,8 @@ const Ascan = ({ navigation }) => {
         );
       });
       
+    }).catch((error) => {
+      console.log("No product found");
     });
     
     setTimeout(() => {
@@ -148,9 +174,10 @@ const Ascan = ({ navigation }) => {
         );
       });
       setScanned(false);
-    }, 1000);
+    }, 3000);
     console.log(scanned);
     console.log(achats);
+    
     //console.log(db.getAllRecords());
     /*db.deleteAllRecords();*/
     //alert(`Bar code with type ${type} and data ${data} has been scanned!`);

@@ -37,6 +37,11 @@ export class ProduitController {
     return this.produitService.update(+id, updateProduitDto);
   }
 
+  @Get('reference/:reference')
+  findByReference(@Param('reference') reference: string) {
+    return this.produitService.findOneByRef(reference);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.produitService.remove(+id);
