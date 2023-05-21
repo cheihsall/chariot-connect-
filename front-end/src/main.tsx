@@ -44,7 +44,6 @@ const router = createBrowserRouter(
     { role == 'Caissier' && <Route path="/dashbord" element={<Dashbord />}>
       
         <Route index element={<Commande  />} />
-        <Route path="commande" element={<Commande />} />
         <Route path="Dcommande" element={<DetailCommande />} />
 
      </Route> }

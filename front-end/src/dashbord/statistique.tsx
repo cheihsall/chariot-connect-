@@ -33,7 +33,7 @@ export default function StatisTique() {
           res.filter((data: { etat: boolean }) => data.etat == true)
         );
       });
-  });
+  },[]);
 
   const [produit, setProduit] = useState([]);
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function StatisTique() {
         // const use = res.etat = 0
         setProduit(res.filter((data: { etat: boolean }) => data.etat == true));
       });
-  });
+  },[]);
   const [chariot, setChariot] = useState([]);
   useEffect(() => {
     fetch("http://localhost:3000/chariot")
@@ -52,7 +52,7 @@ export default function StatisTique() {
         // const use = res.etat = 0
         setChariot(res);
       });
-  });
+  },[]);
 
   React.useEffect(() => {
     if (produit.length == 0) {
