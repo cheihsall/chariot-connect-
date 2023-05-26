@@ -58,8 +58,11 @@ export class DetailCommandeController {
     return this.detailCommandeService.remove(+id);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.detailCommandeService.remove(+id);
+  @Post('/delete')
+  removeProductFromCommande(@Body() deleteParams) {
+    return this.detailCommandeService.removeProductFromCommande(deleteParams);
   }
+  /*remove(@Param('id') id: string) {
+    return this.detailCommandeService.remove(+id);
+  }*/
 }

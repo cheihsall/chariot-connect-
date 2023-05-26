@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
 import * as SQLite from 'expo-sqlite';
-
+import * as db1 from '../database/db.js'
 const db = SQLite.openDatabase('achats.db');
 
-const Achats = () => {
+const Achats = ({navigation}) => {
   const [records, setRecords] = useState([]);
+  const [commandeEnvoyee, setCommandeEnvoyee] = useState(false);
 
   const handleItemPress = (item) => {
     Alert.alert('Suppression', 'Voulez vous supprimer cet article', [
@@ -57,16 +58,29 @@ const Achats = () => {
     });
     commande.montant = records.reduce((a, b) => a + (b['prix'] || 0), 0);
 
-   fetch('http://192.168.1.151:3000/commande/add', {
+   fetch('http://192.168.1.121:3000/commande/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(commande),
+      body: JSON.stringify(commande), 
     })
       .then((response) => response.json())
       .then((data) => {
         console.log('Success:', data);
+        setCommandeEnvoyee(true);
+    
+    if (commandeEnvoyee){
+      console.log('rrrrrrr')
+      navigation.replace('Achats')
+  //  window.location.reload();
+    }   
+   
+    db.transaction((tx) => {
+      tx.executeSql(
+      'DROP TABLE IF EXISTS ventes;'
+      );
+  }); // db1.dropTable();
       })
       .catch((error) => {
         console.log('Error:', error);
@@ -94,7 +108,7 @@ const Achats = () => {
     });
     console.log('Records fetched from SQLite DB');
     console.log(records);
-  }, []);
+  }, [commandeEnvoyee]);
 
   const renderItem = ({ item }) => (
     <View style={styles.item}>

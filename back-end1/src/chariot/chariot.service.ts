@@ -16,27 +16,30 @@ export class ChariotService {
     return this.chariotRepository.save(chariot);
   }*/
   async create(chariot: Chariot): Promise<Chariot> {
-   // create(user: User): Promise<User> {
-   /* return new Promise(async (resolve, reject) => {
+    // create(user: User): Promise<User> {
+    /* return new Promise(async (resolve, reject) => {
       try {*/
-        const existingChariot = await this.chariotRepository.findOne({
-          where: { reference: chariot.reference },
-        });
+    const existingChariot = await this.chariotRepository.findOne({
+      where: { reference: chariot.reference },
+    });
+    const existingRef = await this.chariotRepository.findOne({
+      where: { rfid: chariot.rfid },
+    });
+    if (existingChariot) {
+      throw new UnauthorizedException({
+        message: 'cet chariot existe deja',
+      });
+    } else if (existingRef) {
+      throw new UnauthorizedException({
+        message: 'cet chariot existe deja',
+      });
+    }
 
-        if (existingChariot) {
-          throw new UnauthorizedException({
-            message: 'cet chariot existe deja',
-          });
-         
-        }
-
-        return this.chariotRepository.save(chariot);
-        //resolve(newChariot);
-      } /*catch (error) {
+    return this.chariotRepository.save(chariot);
+    //resolve(newChariot);
+  } /*catch (error) {
         reject("Une erreur s'est produite lors de la création du chariot");
       }*/
-    
-  
 
   findAll(): Promise<Chariot[]> {
     return this.chariotRepository.find();

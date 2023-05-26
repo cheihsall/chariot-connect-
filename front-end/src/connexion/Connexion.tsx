@@ -38,6 +38,10 @@ function Connexionp() {
           return response.json().then((data: any) => {
             setErrorMessage(data.message);
             setEMessage(true);
+            setTimeout(()=>{
+              setErrorMessage("");
+              setEMessage(false);
+            }, 1500)
           });
         }
       })
@@ -56,7 +60,7 @@ function Connexionp() {
       <div className="container p-3 w-100 align-items-center">
         {/* <ReactLogo/>*/}
         <div className="card border-white text-center font-bold ">
-          <h1 className="titre">Chariot connecté</h1>
+          <h1 className="titre">Panier d'achat connecté</h1>
         </div>
 
         <div className="d-flex">

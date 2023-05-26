@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { Link, Outlet, redirect, useLocation, useNavigate } from "react-router-dom";
 import { ClipLoader, PropagateLoader } from "react-spinners";
 //import React from "react";
-
+import Swal from "sweetalert2";
 
 import { useEffect, useState } from "react";
 
@@ -40,7 +40,7 @@ export default function Dashbord() {
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
-
+  //let timerInterval: string | number | NodeJS.Timer | undefined;
 
   useEffect(() => {
     fetch("http://localhost:3000/chariot")
@@ -73,6 +73,10 @@ export default function Dashbord() {
           return response.json().then((data) => {
             setErrorMessage(data.message);
             setEMessage(true);
+            setTimeout(()=>{
+              setErrorMessage("");
+              setEMessage(false);
+            }, 1500)
             console.log(data.message);
           });
         }
@@ -163,7 +167,7 @@ export default function Dashbord() {
                       <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"></path>
                     </svg>
 
-                    <span class="mx-2 text-sm font-medium">Produits</span>
+                    <span class="mx-2 text-sm font-medium">PRODUITS</span>
                   </button>
                 </Link>
                 <Link to="ajouterproduit">
@@ -173,7 +177,7 @@ export default function Dashbord() {
                       <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
                     </svg>
 
-                    <span class="mx-3 text-sm font-medium">+ produit</span>
+                    <span class="mx-3 text-sm font-medium">+ PRODUIT</span>
                   </button>
                 </Link>
               </div>
@@ -220,7 +224,21 @@ export default function Dashbord() {
 
 
               <div class=" ">
+              {role == 'Administrateur' && <> 
+                <Link to="">
+                  <button class="text-white transition-colors duration-3000 transform px-3 py-2 bg-emerald hover:bg-[#FEBC11] hover:text-white py-3  w-55 h-12 font-medium rounded-lg drop-shadow-lg flex flex-row gap-2">
+                    <svg fill="none" stroke="currentColor" stroke-width="1.5" class="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"></path>
+                    </svg>
 
+                    <span class="mx-2 text-sm font-medium">Historique</span>
+                  </button>
+                </Link>
+
+                </>
+              }
+
+{role == 'Caissier' && <> 
                 <Link to="">
                   <button class="text-white transition-colors duration-3000 transform px-3 py-2 bg-emerald hover:bg-[#FEBC11] hover:text-white py-3  w-55 h-12 font-medium rounded-lg drop-shadow-lg flex flex-row gap-2">
                     <svg fill="none" stroke="currentColor" stroke-width="1.5" class="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -231,7 +249,8 @@ export default function Dashbord() {
                   </button>
                 </Link>
 
-
+                </>
+              }
 
                 <button onClick={() => logout()} class="text-white transition-colors duration-3000 transform px-3 py-2 bg-emerald hover:bg-[#FEBC11] hover:text-white py-3  w-55 h-12 font-medium rounded-lg drop-shadow-lg flex flex-row gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -294,12 +313,20 @@ export default function Dashbord() {
             </div>
 
 
-            <div className="modal-body mx-3">
+            <div className="modal-body mx-3">  <div
+                  className={`justify-content-center alert alert-danger ${
+                    !EMessage ? "cacher" : ""
+                  }`}
+                  role="alert"
+                >
+                  {errorMessage}
+                </div>
               <form
                 onSubmit={handleSubmit(onSubmit)}
 
                 className="formulaire gap-3 d-flex justify-content-center"
               >
+              
                 <div className="d-flex flex-column ">
                   <label className="lab" htmlFor="">
                     Reference{" "}
@@ -337,7 +364,7 @@ export default function Dashbord() {
                         message: "ce champ est requis",
                       },
                     })}
-                    type="Number"
+                    type="text"
                   />
                   <div>
                     {errors.rfid?.type === "required" && (
@@ -389,7 +416,7 @@ export default function Dashbord() {
                 <table className="table table-striped " >
                   <thead className="sticky-top">
                     <tr>
-                      <th scope="col">ID</th>
+                     
                       <th scope="col">Reference</th>
 
 
@@ -414,11 +441,7 @@ export default function Dashbord() {
                       ).map((chariots) => (
                         <tr key={chariots.id}>
 
-                          <td>
-                            <div className="">
-                              <span>{chariots.id}</span>
-                            </div>
-                          </td>
+                         
                           <td>
                             <div >
                               <span>{chariots.reference}</span>

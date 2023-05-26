@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-
+import Swal from "sweetalert2";
 import "./AjoutProduit.css";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { useForm } from "react-hook-form";
@@ -13,7 +13,9 @@ function AjoutProduit() {
     reset,
   } = useForm({ mode: "onChange" });
   const formRef = useRef(null);
-
+  const [errorMessage, setErrorMessage] = useState("");
+  const [EMessage, setEMessage] = useState<boolean>(false);
+  let timerInterval: string | number | NodeJS.Timer | undefined;
   const onSubmit = (data: any) => {
     const lecteur = new FileReader();
 
@@ -24,8 +26,8 @@ function AjoutProduit() {
       const base64Image = lecteur.result?.split(",")[1];
       //console.log(lecteur.result);
       //console.log(base64Image);
-
-      console.log(data);
+try{
+     // console.log(data);
       //envoi du formulaire au serveur
       const reponse = await axios.post("http://localhost:3000/produit", {
         libelle: data.libelle,
@@ -38,8 +40,46 @@ function AjoutProduit() {
         // photo: data.photo,
         photo: base64Image,
       });
-      console.log(reponse);
-      reset(); // réinitialiser le formulaire après l'envoi réussi
+      if(reponse.data.message === 'succes'){
+
+        reset(); 
+        Swal.fire({
+          title: "Produit enregistré avec succes",
+          icon: "success",
+          //iconHtml: "؟",
+         // html: "cet chariot n est pas dans la base de donnee.",
+          timer: 1500,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            //const b = Swal.getHtmlContainer().querySelector('b')
+            timerInterval = setInterval(() => {
+              //  b.textContent = Swal.getTimerLeft()
+            }, 100);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          },
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+           // console.log("I was closed by the timer");
+          }
+        });
+        ////console.log(reponse);
+      }
+      
+    } catch (error){
+      console
+      setErrorMessage(error.response.data.message); 
+      setEMessage(true);
+      setTimeout(()=>{
+        setErrorMessage("");
+        setEMessage(false);
+      }, 3000)
+     
+     // console.log(error.response.data.message)
+    }// réinitialiser le formulaire après l'envoi réussi
     };
   };
   return (
@@ -55,6 +95,14 @@ function AjoutProduit() {
                 ref={formRef}
                 className="formulaire gap-3 d-flex flex-column justify-content-center"
               >
+                 <div
+                  className={`justify-content-center alert alert-danger ${
+                    !EMessage ? "cacher" : ""
+                  }`}
+                  role="alert"
+                >
+                  {errorMessage}
+                </div>
                 <div className="d-flex gap-5 justify-content-center">
                   <div className="d-flex flex-column ">
                     <label className="lab" htmlFor="">
@@ -82,7 +130,7 @@ function AjoutProduit() {
 
                   <div className="d-flex flex-column ">
                     <label className="lab" htmlFor="">
-                      Libelé{" "}
+                      Libellé{" "}
                     </label>
                     <input
                       className="form-control border-none"

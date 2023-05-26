@@ -3,8 +3,7 @@ import "./HistoCmd.css";
 import { useForm } from "react-hook-form";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEye, faEdit, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+
 
 library.add(faEye, faEdit, faTrashAlt);
 
@@ -20,7 +19,6 @@ function HistoCmd() {
   const [verse, setVerse] = useState(0);
   const [rendu, setRendu] = useState(0);
   const [users, setUsers] = useState<any>([]);
-
   const [user_id, setInfo3] = useState(localStorage.getItem("id_user"));
   const [commande, setCommande] = useState([]);
   const [id, setId] = useState("");
@@ -39,8 +37,6 @@ function HistoCmd() {
     fetch("http://localhost:3000/commande")
       .then((res) => res.json())
       .then((res) => {
-        // const use = res.etat = 0
-        console.log(res);
         setUsers(res.reverse());
         setCommande(res.reverse())
       });
@@ -72,14 +68,14 @@ function HistoCmd() {
         {/* <ReactLogo/>*/}
 
         <div className="card ">
-          <div className="card head">
+          <div className="card head"><h1>Historique des commandes</h1>
             <select className="text-white bg-[#4C7FC7] right-0" name="" id="" onChange={(e)=>filterCommande(e)}>
               <option value="tout">tout</option>
               <option value="valider">valider</option>
               <option value="non valider">non valider</option>
             </select>
           </div>
-          <div className="table-wrapper" style={{ minHeight: "60vh" }}>
+          <div className="table-wrapper" style={{ minHeight: "50vh" }}>
             <table className="table table-striped">
               <thead className="sticky-top">
                 <tr>
@@ -89,7 +85,8 @@ function HistoCmd() {
                   <th scope="col">Chariot</th>
                  
                   <th scope="col">Etat</th>
-                  <th scope="col">Date de commande</th>
+                  <th scope="col">Caissiers</th>
+                  <th scope="col">Date de validation</th>
                 </tr>
               </thead>
               <tbody>
@@ -115,15 +112,21 @@ function HistoCmd() {
                         <span>{Produit.etat ? "non valider" : "valider"}</span>
                       </div>
                     </td>
-
                     <td>
                       <div >
-                        <span>{Produit.date?.split('T')[0]} à {Produit.date?.split('T')[1].split('Z')[0].split('.')[0]}</span>
+                        <span>{Produit.user?.prenom } &nbsp; &nbsp; {Produit.user?.nom }  </span>
+                      </div>
+                    </td>
+                    <td>
+                      <div >
+                        <span>{Produit.dateValid && Produit.dateValid.includes('T') ? `${Produit.dateValid.split('T')[0]} à ${Produit.dateValid.split('T')[1].split('Z')[0].split('.')[0]}` : ''}
+
+</span>
                       </div>
                     </td>
                   </tr>
                 ))}
-              </tbody>
+              </tbody> 
             </table>
           </div>
           <div className="card head2"></div>

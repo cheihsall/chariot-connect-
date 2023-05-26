@@ -16,7 +16,7 @@ export default function App() {
       <NavigationContainer>
     
       <Stack.Navigator>
-          <Stack.Screen name="Chariot 5" options={{headerStyle: {
+          <Stack.Screen name="Chariot 1" options={{headerStyle: {
               backgroundColor: '#4c7fc7',
             },
             headerTintColor: '#fff',
@@ -26,12 +26,12 @@ export default function App() {
             statusBarAnimation: 'slide',
             statusBarStyle: 'dark',}} component={Home} />
           <Stack.Screen name="Produit" component={Ascan} />
-          <Stack.Screen name="Achats" options={{
+          <Stack.Screen name="Achats" options={({navigation})=>({
             goBack: false,
-            headerRight: () => (
+            headerLeft: () => (
               <Button
-                onPress={() => alert('This is a button!')}
-                title="Vider"
+                onPress={() => navigation.navigate('Produit')}
+                title="Retour"
                 color="red"
               />
             ),
@@ -45,7 +45,7 @@ export default function App() {
             statusBarAnimation: 'slide',
             statusBarStyle: 'dark',
             
-          }} component={Achats} />
+          })} component={Achats} />
         </Stack.Navigator>
       </NavigationContainer>
     </QueryClientProvider>

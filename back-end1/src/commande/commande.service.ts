@@ -25,12 +25,14 @@ export class CommandeService {
     }[];
     montant: number;
   }): Promise<any> {
+    console.log(commande);
     const userCommande = {};
     userCommande['chariot'] = commande.chariot;
     userCommande['total'] = commande.montant;
     userCommande['user'] = null;
     const savedCommande: any = await this.commandeRepository.save(commande);
     for (const element of commande?.produit) {
+      console.log(element);
       const detailCommande = {};
       detailCommande['commande'] = savedCommande.id;
       detailCommande['produit'] = element.id;
@@ -41,7 +43,7 @@ export class CommandeService {
   }
 
   findAll(): Promise<Commande[]> {
-    return this.commandeRepository.find({ relations: ['chariot'] });
+    return this.commandeRepository.find({ relations: ['chariot', 'user'] });
   }
 
   findOne(id: number) {

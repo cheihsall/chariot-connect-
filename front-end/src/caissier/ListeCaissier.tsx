@@ -13,6 +13,7 @@ function ListeCaissier() {
   const [id, setId] = useState("");
   const [update, setUpdate] = useState(false);
   const [caissiers, setCaissiers] = useState<any>([]);
+  const [user_id, setInfo3] = useState(localStorage.getItem("id_user"));
   const {
     register,
     handleSubmit,
@@ -96,7 +97,7 @@ function ListeCaissier() {
       .then((res) => res.json())
       .then((res) => {
         // const use = res.etat = 0
-        setCaissiers(res.filter((data: any) => data.etat == true));
+        setCaissiers(res.filter((data: any) => data.etat == true && data.id != user_id));
       });
     setUpdate(false);
   };

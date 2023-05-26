@@ -174,7 +174,7 @@ function ListeProduit() {
               <thead className="sticky-top">
                 <tr>
                   <th scope="col">Photo</th>
-                  <th scope="col">Libelé</th>
+                  <th scope="col">Libellé</th>
                   <th scope="col">Prix</th>
                   <th scope="col">Nbre</th>
 
@@ -318,7 +318,7 @@ function ListeProduit() {
               >
                 <div className="md-form mb-5">
                   <label className="lab" htmlFor="">
-                    Libelé{" "}
+                    Libellé{" "}
                   </label>
                   <input
                     className="form-control border-none"

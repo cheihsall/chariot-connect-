@@ -1,13 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import reactLogo from "../assets/chariot3x.png";
-import iconeConnect from "../Ellipse 1.png";
-import iconeUser from "../assets/icons8-user 1.png";
-import viteLogo from "/vite.svg";
 import "./commande.css";
 import { useForm } from "react-hook-form";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEye, faEdit, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Link, redirect } from "react-router-dom";
@@ -47,86 +42,24 @@ function Commande() {
     setInfo3(user);
   }
   const navigate = useNavigate();
-
-  const [currentTime, setCurrentTime] = useState("");
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const date = new Date();
-      const hours = date.getHours();
-      const minutes = date.getMinutes();
-      const seconds = date.getSeconds();
-      setCurrentTime(`${hours}:${minutes}:${seconds}`);
-    }, 1000);
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
-
-  if (currentTime == "1:37:10") {
-    // Effectuer la redirection vers Dcommande avec l'ID
-    console.log("rrrrrrrrrrrrrr");
-    const id = "2"; // Remplacez "votre_id" par l'ID souhaité
-    navigate(`dashbord/Dcommande`, { state: { id } });
-  }
-
   let timerInterval: string | number | NodeJS.Timer | undefined;
-  /* // Obtenir l'heure actuelle
-    useEffect(() => {
-      const timeoutId = setTimeout(() => {
-        // Obtenir l'heure actuelle
-        const date = new Date();
-        const hours = date.getHours();
-        const minutes = date.getMinutes();
-        const seconds = date.getSeconds();
-        setSeconde(secondes)
-  console.log(seconds)
-        // Vérifier si l'heure est 01:03:00
-        if (seconds === 10) {
-          // Effectuer la redirection vers Dcommande avec l'ID
-           console.log('rrrrrrrrrrrrrrrrr')
-          const id = "4"; // Remplacez "votre_id" par l'ID souhaité
-          navigate(`../Dcommande`, { state: { id } });
-        }
-      }, 100); // Vérifier toutes les secondes (1000 ms)
-  
-      return () => {
-        // Nettoyage du timeout lors du démontage du composant
-        clearTimeout(timeoutId);
-      };
-    }, []);
  
-  
-
- if (count) {
-    const id = count;
-    navigate.push({
-      pathname: '../Dcommande',
-      state: { id: id }
-    });
-  }
-  if (count) {
-    const id = count;
-    history.push(`../Dcommande?id=${id}`);
-  }*/
 
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
     socket.on("data", (data) => {
-      console.log(data);
       if (data == "Compte archivé") {
         setCom([]);
       } else {
         setCom(data);
-        const id = data; // Remplacez "votre_id" par l'ID souhaité
+        const id = data.id;
+        const montant = data.montant // Remplacez "votre_id" par l'ID souhaité
 
-        navigate(`/dashboard/Dcommande`, { state: { id } });
+        navigate(`/dashbord/Dcommande`, { state: { id ,montant} });
 
       }
     });
     socket.on("introuvable", (data) => {
-      console.log(data);
       if (data == 1) {
         //  let timerInterval: string | number | NodeJS.Timer | undefined
         Swal.fire({
@@ -315,7 +248,7 @@ function Commande() {
                         </td>
 
                         <td>
-                          <Link to="Dcommande?" state={{ id: Produit.id }}>
+                          <Link to="Dcommande?" state={{ id: Produit.id , montant: Produit.montant}}>
                             {" "}
                             <button
                               type="button"

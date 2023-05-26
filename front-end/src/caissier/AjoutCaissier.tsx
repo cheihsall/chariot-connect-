@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import "./AjoutCaissier.css";
+import Swal from "sweetalert2";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { useForm } from "react-hook-form";
 function AjoutCaissier() {
@@ -15,7 +16,7 @@ function AjoutCaissier() {
   } = useForm({ mode: "onChange" });
   const password = useRef({});
   password.current = watch("password", "");
-
+  let timerInterval: string | number | NodeJS.Timer | undefined;
   const onSubmit = (data: any) => {
     fetch("http://localhost:3000/users", {
       body: JSON.stringify({
@@ -32,13 +33,42 @@ function AjoutCaissier() {
     })
       .then((response) => {
         if (response.status === 201) {
+          Swal.fire({
+            title: "Utilisatur ajouté avec succes",
+            icon: "success",
+            //iconHtml: "؟",
+           // html: "cet chariot n est pas dans la base de donnee.",
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading();
+              //const b = Swal.getHtmlContainer().querySelector('b')
+              timerInterval = setInterval(() => {
+                //  b.textContent = Swal.getTimerLeft()
+              }, 100);
+            },
+            willClose: () => {
+              clearInterval(timerInterval);
+            },
+          }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+             // console.log("I was closed by the timer");
+            }
+          });
+           reset();
           return response.json();
+         
         } else {
           //sendMessage('message', 'cool');
           return response.json().then((data: any) => {
             setErrorMessage(data.message);
             setEMessage(true);
-            console.log(data.message);
+            setTimeout(()=>{
+              setErrorMessage("");
+              setEMessage(false);
+            }, 3000)
+          //  console.log(data.message);
           });
         }
       })

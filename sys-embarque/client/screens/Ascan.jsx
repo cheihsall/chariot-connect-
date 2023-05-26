@@ -14,7 +14,7 @@ const scannerHeight = scannerWidth;
 
 /* import { createServer } from "miragejs"
 
-if (window.server) {
+if (window.server) { 
   server.shutdown()
 }
 
@@ -116,13 +116,14 @@ const Ascan = ({ navigation }) => {
  /* Beep */
 
   const handleBarCodeScanned = ({ type, data, bounds }) => {
+   // db.dropTable()
     setScanned(true);
     playSound();
     let product = {}
     let quantite = 1;
     let prix = 0;
     //fetch("http://192.168.1.151:3000/produit/reference/"+ data).then((res) => res.json()).then((products) => console.log(products));
-    fetch("http://192.168.1.151:3000/produit/reference/"+ data).then((res) => res.json()).then((productInfo) => {
+    fetch("http://192.168.1.121:3000/produit/reference/"+ data).then((res) => res.json()).then((productInfo) => {
       console.log("productInfo", productInfo);
       //db.dropTable();
       console.log(data);

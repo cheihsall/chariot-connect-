@@ -31,6 +31,9 @@ export class Commande {
 
   @CreateDateColumn({ type: 'timestamp', precision: 3 })
   date: Date;
+
+  @Column({ default: '' })
+  dateValid: string;
 }
 
 //{type: 'timestamptz'}

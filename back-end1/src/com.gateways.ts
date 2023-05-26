@@ -86,7 +86,8 @@ export class ComGateway {
         if (element && element.etat == true) {
           //console.log('Chariot trouvé :', chariot);
           console.log('Chariot trouvé :', element.id);
-          this.server.emit('data', element.id);
+          const donnee = { id: element.id, montant: element.montant };
+          this.server.emit('data', donnee);
           port.write('1');
           cpt = 1;
           return;

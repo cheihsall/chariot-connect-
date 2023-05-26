@@ -12,14 +12,22 @@ export class ProduitService {
     private produitRepository: Repository<Produit>,
   ) {}
 
+  async verifProduit(reference: string): Promise<boolean>{
+    const produit = await this.produitRepository.findOneBy({ reference });
+    return !!produit;
+  }
+
   async create(produit: Produit): Promise<Produit> {
-    const userExist = await this.findOneByRef(produit.reference);
+    //const userExist = await this.findOneByRef(produit.reference);
+
+
+
 
     //Si l'utilisateur existe déjà, on renvoie une erreur
-    if (userExist) {
+   /* if (userExist) {
       console.log(userExist);
-      throw new HttpException('User already exist', HttpStatus.NOT_ACCEPTABLE);
-    }
+      throw new HttpException('cet produit existe deja', HttpStatus.NOT_ACCEPTABLE);
+    }*/
     return this.produitRepository.save(produit);
   }
 
